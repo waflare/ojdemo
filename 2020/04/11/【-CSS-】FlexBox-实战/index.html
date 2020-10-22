@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/aikan.png">
+  <link rel="icon" type="image/png" href="/img/aikan.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Warren">
+  <meta name="keywords" content="">
+  <title>【 CSS 】FlexBox 实战 - Warren blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Warren Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 四月 11日 2020, 4:03 下午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.2k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      6 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="FlexBox-实战"><a href="#FlexBox-实战" class="headerlink" title="FlexBox 实战"></a>FlexBox 实战</h1><blockquote>
+<p>文章学习于阮一峰老师 <a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="noopener">布局教程</a></p>
+</blockquote>
+<h1>骰子布局练习</h1>
+
+<p>先设置基础css、html</p>
+<pre><code class="html">&lt;div class=&quot;box&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">// 骰子面
+.box {
+    width: 300px;
+    height: 300px;
+    margin: 30px;
+    border: 2px black solid;
+    border-radius: 5px;
+}
+
+// 包圆点的盒子
+.dotBox {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// 圆点
+.dot {
+    width: 45px;
+    height: 45px;
+    background-color: black;
+    border-radius: 50%;
+}</code></pre>
+<p>效果：</p>
+<p><img src="/img/image-20200411164648203.png" srcset="/img/loading.gif" alt="image-20200411164648203"></p>
+<h2 id="一、骰子面划分"><a href="#一、骰子面划分" class="headerlink" title="一、骰子面划分"></a>一、骰子面划分</h2><p><img src="/img/image-20200411170305912.png" srcset="/img/loading.gif" alt="image-20200411170305912"></p>
+<p>按九个点位的布局，下面将使用 flex box 布局将容器里的项目在九个点随意的放置。</p>
+<h2 id="二、单项目"><a href="#二、单项目" class="headerlink" title="二、单项目"></a>二、单项目</h2><h3 id="1-号点位"><a href="#1-号点位" class="headerlink" title="1 号点位"></a>1 号点位</h3><p><img src="/img/image-20200411164648203.png" srcset="/img/loading.gif" alt="image-20200411164648203"></p>
+<blockquote>
+<p>直接文档流单个项目就在1号点位了</p>
+</blockquote>
+<h3 id="2-号点位"><a href="#2-号点位" class="headerlink" title="2 号点位"></a>2 号点位</h3><p><img src="/img/image-20200411171106318.png" srcset="/img/loading.gif" alt="image-20200411171106318"></p>
+<blockquote>
+<p>设置 骰子面为 flex 容器，然后设置 justify-content 为 center 让 圆点居中</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box one-2&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.one-2 {
+    display: flex;
+    justify-content: center;
+}</code></pre>
+<h3 id="3-号点位"><a href="#3-号点位" class="headerlink" title="3 号点位"></a>3 号点位</h3><p><img src="/img/image-20200411171458761.png" srcset="/img/loading.gif" alt="image-20200411171458761"></p>
+<blockquote>
+<p>设置 骰子面为 flex 容器，然后设置 justify-content 为 flex-end 让 圆点居右</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box one-3&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.one-3 {
+    display: flex;
+    justify-content: flex-end;
+}</code></pre>
+<h3 id="4-号点位"><a href="#4-号点位" class="headerlink" title="4 号点位"></a>4 号点位</h3><p><img src="/img/image-20200411172706046.png" srcset="/img/loading.gif" alt="image-20200411172706046"></p>
+<blockquote>
+<p>设置 align-items 为 center 让圆点交叉轴方向居中</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box one-4&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.one-4 {
+    display: flex;
+    align-items: center;
+}</code></pre>
+<h3 id="5-号点位"><a href="#5-号点位" class="headerlink" title="5 号点位"></a>5 号点位</h3><p><img src="/img/image-20200411173310889.png" srcset="/img/loading.gif" alt="image-20200411173310889"></p>
+<blockquote>
+<p>设置 justify-content 为 center 水平居中，设置 align-items 为 center 垂直居中</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box one-5&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.one-5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}</code></pre>
+<h3 style='color: red'>下面几个单项的只放css了，就改一下类名 one-X </h3>
+
+<h3 id="6-号点位"><a href="#6-号点位" class="headerlink" title="6 号点位"></a>6 号点位</h3><p><img src="/img/image-20200411173845945.png" srcset="/img/loading.gif" alt="image-20200411173845945"></p>
+<pre><code class="css">.one-6 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}</code></pre>
+<h3 id="7-号点位"><a href="#7-号点位" class="headerlink" title="7 号点位"></a>7 号点位</h3><p><img src="/img/image-20200411174027592.png" srcset="/img/loading.gif" alt="image-20200411174027592"></p>
+<pre><code class="css">.one-7 {
+    display: flex;
+    align-items: flex-end;
+}</code></pre>
+<h3 id="8-号点位"><a href="#8-号点位" class="headerlink" title="8 号点位"></a>8 号点位</h3><p><img src="/img/image-20200411174425458.png" srcset="/img/loading.gif" alt="image-20200411174425458"></p>
+<pre><code class="css">.one-8 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}</code></pre>
+<h3 id="9-号点位"><a href="#9-号点位" class="headerlink" title="9 号点位"></a>9 号点位</h3><p><img src="/img/image-20200411174455809.png" srcset="/img/loading.gif" alt="image-20200411174455809"></p>
+<pre><code class="css">.one-9 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}</code></pre>
+<h2 id="三、双项目"><a href="#三、双项目" class="headerlink" title="三、双项目"></a>三、双项目</h2><h3 id="1-3-点位"><a href="#1-3-点位" class="headerlink" title="1-3 点位"></a>1-3 点位</h3><p><img src="/img/image-20200411180028036.png" srcset="/img/loading.gif" alt="image-20200411180028036"></p>
+<blockquote>
+<p>设置两端对齐， justify-content 为 space-between</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box two-1-3&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.two-1-3 {
+    display: flex;
+    justify-content: space-between;
+}</code></pre>
+<h3 id="1-7-点位"><a href="#1-7-点位" class="headerlink" title="1-7 点位"></a>1-7 点位</h3><p><img src="/img/image-20200411180657477.png" srcset="/img/loading.gif" alt="image-20200411180657477"></p>
+<blockquote>
+<p>设置主轴为竖直方向由上往下 flex-direction 为 column</p>
+<p>设置两端对齐， justify-content 为 space-between</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box two-1-7&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.two-1-7 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}</code></pre>
+<h3 id="2-8-点位"><a href="#2-8-点位" class="headerlink" title="2-8 点位"></a>2-8 点位</h3><p><img src="/img/image-20200411181143162.png" srcset="/img/loading.gif" alt="image-20200411181143162"></p>
+<pre><code class="html">&lt;div class=&quot;box two-2-8&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.two-2-8 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}</code></pre>
+<h3 id="1-8-点位"><a href="#1-8-点位" class="headerlink" title="1-8 点位"></a>1-8 点位</h3><p><img src="/img/image-20200411181510754.png" srcset="/img/loading.gif" alt="image-20200411181510754"></p>
+<blockquote>
+<p>先在容器里设置两点的 align-items 都为 flex-start</p>
+<p>然后单独给 8 号点位设置 align-self 为 flex-end</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box two-1-8&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;dotBox two-1-8-item&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.two-1-8 {
+    display: flex;
+    align-items: flex-start;
+}
+
+.two-1-8-item {
+    align-self: flex-end;
+}</code></pre>
+<h3 id="1-9-点位"><a href="#1-9-点位" class="headerlink" title="1-9 点位"></a>1-9 点位</h3><p><img src="/img/image-20200411182002843.png" srcset="/img/loading.gif" alt="image-20200411182002843"></p>
+<blockquote>
+<p>先在容器里设置两点的 align-items 都为 flex-start 且 justify-content 为 space-between</p>
+<p>然后单独给 8 号点位设置 align-self 为 flex-end</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box two-1-9&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;dotBox two-1-9-item&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.two-1-9 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.two-1-9-item {
+    align-self: flex-end;
+}</code></pre>
+<h2 id="四、四项目"><a href="#四、四项目" class="headerlink" title="四、四项目"></a>四、四项目</h2><h3 id="1-3-5-8-点位"><a href="#1-3-5-8-点位" class="headerlink" title="1-3-5-8 点位"></a>1-3-5-8 点位</h3><p><img src="/img/image-20200411184206435.png" srcset="/img/loading.gif" alt="image-20200411184206435"></p>
+<blockquote>
+<p>中间的单独搭个 flex 容器</p>
+</blockquote>
+<pre><code class="html">&lt;div class=&quot;box four-1-3-5-8&quot;&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;four-1-3-5-8-item&quot;&gt;
+        &lt;div class=&quot;dotBox&quot;&gt;
+            &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;dotBox&quot;&gt;
+            &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;dotBox&quot;&gt;
+        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.four-1-3-5-8 {
+    display: flex;
+    align-items: flex-start;
+}
+
+.four-1-3-5-8-item {
+    height: 100%;
+    display: flex; 
+    flex-direction: column-reverse; 
+}</code></pre>
+<h2 style='color:red;'>再增加点数就同理，使用变动主轴方向 flex-direction、主轴方向对其方式 justify-content、交叉轴方向上对其方式 align-items、使项目也是flex容器包裹项目这些方法大致都可以完成</h2>
+
+
+
+<h2 id="五、最后"><a href="#五、最后" class="headerlink" title="五、最后"></a>五、最后</h2><p>交一下骰子六点的作业</p>
+<p><img src="/img/image-20200411195021255.png" srcset="/img/loading.gif" alt="image-20200411200955345"></p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/CSS/">CSS</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/CSS/">CSS</a>
+                    
+                      <a class="hover-with-bg" href="/tags/FlexBox/">FlexBox</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/18/%E3%80%90-CSS-%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFBFC/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">【 CSS 】什么是BFC</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/09/%E3%80%90-CSS-%E3%80%91FlexBox-%E8%AF%AD%E6%B3%95/">
+                        <span class="hidden-mobile">【 CSS 】FlexBox 语法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <div id="vcomments"></div>
+  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var notify = 'true' === 'true';
+    var verify = 'true' === 'true';
+    var oldLoad = window.onload;
+    window.onload = function () {
+      new Valine({
+        el: '#vcomments',
+        notify: notify,
+        verify: verify,
+        app_id: "plKXUYr4j5DVFgq4MozzqNhk-gzGzoHsz",
+        app_key: "HwvSIxwKVXvkOsLK8YaqnU1u",
+        placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+        avatar: "/retro",
+        meta: ['nick', 'mail', 'link'],
+        pageSize: "10",
+      });
+      oldLoad && oldLoad();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "【 CSS 】FlexBox 实战&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 100,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

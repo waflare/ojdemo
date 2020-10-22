@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/aikan.png">
+  <link rel="icon" type="image/png" href="/img/aikan.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Warren">
+  <meta name="keywords" content="">
+  <title>【 Git 】Git使用手册 - Warren blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Warren Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期日, 四月 5日 2020, 10:44 晚上
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.5k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="Git使用"><a href="#Git使用" class="headerlink" title="Git使用"></a>Git使用</h1><h2 id="一、下载安装git"><a href="#一、下载安装git" class="headerlink" title="一、下载安装git"></a>一、下载安装git</h2><blockquote>
+<p>自行百度下载安装！！！</p>
+</blockquote>
+<h2 id="二、初次使用配置"><a href="#二、初次使用配置" class="headerlink" title="二、初次使用配置"></a>二、初次使用配置</h2><blockquote>
+<p>在git cmd中依次输入如下命令：</p>
+<p><code>git config --glabal user.name &quot;你的用户名（不要中文）&quot;</code></p>
+<p><code>git config --glabal user.email &quot;你的邮箱&quot;</code></p>
+</blockquote>
+<h2 id="三、简单命令"><a href="#三、简单命令" class="headerlink" title="三、简单命令"></a>三、简单命令</h2><h3 id="（一）两步将工作目录里的文件放到Git仓库"><a href="#（一）两步将工作目录里的文件放到Git仓库" class="headerlink" title="（一）两步将工作目录里的文件放到Git仓库"></a>（一）两步将工作目录里的文件放到Git仓库</h3><ol>
+<li><p><code>git add 文件名</code></p>
+</li>
+<li><p><code>git commit -m &quot;你对这次提交的备注，方便查看&quot;</code></p>
+<h3 id="（二）查看git里的文件状态"><a href="#（二）查看git里的文件状态" class="headerlink" title="（二）查看git里的文件状态"></a>（二）查看git里的文件状态</h3><p> <code>git status</code></p>
+<h3 id="（三）查看提交日志"><a href="#（三）查看提交日志" class="headerlink" title="（三）查看提交日志"></a>（三）查看提交日志</h3><p> <code>git log</code>：基本形式</p>
+</li>
+</ol>
+<p>​    <code>git log --oneline</code>：把每一个提交压缩到了一行中。它默认只显示提交ID和提交信息的第一行</p>
+<p>​    <code>git log --decorate</code>：很多时候，知道每个提交关联的分支或者标签很有用。–decorate标记让git log显示指向这个提交的所有引用（比如说分支、标签等）。</p>
+<p>​    <code>git log --graph</code>：绘制一个ASCII图像来展示提交历史的分支结构。它经常和–oneline和–decorate两个选项一起使用，这样会更容易查看哪个提交属于哪个</p>
+<p>​    <code>git reflog</code> ：查看所有历史提交</p>
+<h3 id="（四）reset和checkout"><a href="#（四）reset和checkout" class="headerlink" title="（四）reset和checkout"></a>（四）reset和checkout</h3><p> <strong>注意：这个命令没那么简单！仔细品味</strong></p>
+<h4 id="1）reset"><a href="#1）reset" class="headerlink" title="1）reset"></a>1）<strong>reset</strong></h4><blockquote>
+<p>三种操作：(ps：下面操作中HEAD后面的波浪线表示该仓库的上一个版本（这里的版本也称作快照），两个波浪线表示现在HEAD指向的版本的前两个版本，如果是前n个版本可以写作HEAD~n)</p>
+</blockquote>
+<ul>
+<li><p><strong><code>git reset --soft HEAD~</code></strong></p>
+<ul>
+<li>执行该操作后：<ul>
+<li>移动HEAD的指向，将其指向上一个版本</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>git reset --mixed HEAD~</code></strong></p>
+<ul>
+<li>执行该操作后：<ul>
+<li>移动HEAD的指向，将其指向上一个快照</li>
+<li>将HEAD移动后指向的版本内容回滚到暂存区域</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>git reset --hard HEAD~</code></strong></p>
+<p>  （<strong>注意危险：该操作会将项目目录区域下的文件覆盖掉，本地的文件可能丢失，谨慎操作！</strong>）</p>
+<ul>
+<li>执行该操作后：<ul>
+<li>移动HEAD的指向，将其指向前一个版本快照</li>
+<li>将HEAD移动后指向的版本快照回滚到暂存区域</li>
+<li>将暂存区域的文件回滚到项目目录区域（<strong>万分注意：这里这步是会覆盖项目文件的</strong>）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2）checkout"><a href="#2）checkout" class="headerlink" title="2）checkout"></a>2）checkout</h4><ul>
+<li><p>将版本快照滚到工作目录和暂存区域里去</p>
+<p>  <strong><code>git checkout 版本号</code></strong></p>
+</li>
+</ul>
+<ul>
+<li><p>将暂存区域里的东西回滚到工作目录里来</p>
+<p>  <strong><code>git checkout</code></strong></p>
+<p>  单个文件：<strong>git checkout 文件名</strong></p>
+</li>
+</ul>
+<p> <strong>总结：</strong></p>
+<ol>
+<li><strong><code>--soft</code>、<code>--mixed</code>、<code>--hard</code>分别回滚一级二级三级，程度递增，特别<code>hard</code>会回滚到项目目录覆盖到本地，需要注意</strong></li>
+<li><strong>默认是<code>--mixed</code></strong></li>
+<li><strong><code>reset</code>还可以回滚到特定的版本快照，只需要快照的id即可，即版本的hash值，hash值可以用<code>git log查看</code>，<code>git reset 版本id</code>，例如：<code>git reset bc57ccd</code>（不用全部，前几位能够定位即可）</strong></li>
+<li><strong><code>reset</code>还可以回滚单个文件，<code>git reset</code> 版本快照 文件名或者路径，例如：<code>git reset bc57ccd HEADME.md</code></strong><ol start="5">
+<li><strong><code>reset</code>还可以往前滚，如果你往后滚了，<code>HEAD</code>指针指向了旧的版本快照，那么你只要找到你要回滚的之前的新提交的版本快照id就可以，而查看快照id可以用<code>git reflog</code>查看。</strong></li>
+</ol>
+</li>
+</ol>
+<h3 id="（五）对比文件"><a href="#（五）对比文件" class="headerlink" title="（五）对比文件"></a>（五）对比文件</h3><h4 id="1-比较暂存区域与工作目录"><a href="#1-比较暂存区域与工作目录" class="headerlink" title="(1)比较暂存区域与工作目录"></a>(1)比较暂存区域与工作目录</h4><p><code>git diff</code></p>
+<p>对比文件较多时，可以操作移动，简单操作如下：</p>
+<ul>
+<li>按键盘上的<code>j</code>表示向下移动一行</li>
+<li><code>k</code> 向上移动一行</li>
+<li><code>f</code> 向下翻一页</li>
+<li><code>b</code> 向上翻一页</li>
+<li><code>d</code> 向下移动半页</li>
+<li><code>u</code> 向上移动半页</li>
+<li><code>g</code> 跳转到第一行</li>
+<li><code>G</code> 跳转到最后一行</li>
+<li><code>行数 g</code> 例如<code>3 g</code> 跳到第三行</li>
+<li><code>/搜索词</code> 从上往下搜索该词语</li>
+<li><code>?搜索词</code> 从下往上搜索该词语</li>
+<li><code>h</code>帮助窗口</li>
+</ul>
+<h4 id="2-比较仓库里的两个版本"><a href="#2-比较仓库里的两个版本" class="headerlink" title="(2)比较仓库里的两个版本"></a>(2)比较仓库里的两个版本</h4><p><code>git diff 版本号1 版本号2</code></p>
+<h4 id="3-比较当前工作目录和仓库里的版本快照"><a href="#3-比较当前工作目录和仓库里的版本快照" class="headerlink" title="(3)比较当前工作目录和仓库里的版本快照"></a>(3)比较当前工作目录和仓库里的版本快照</h4><p><code>git diff 版本号</code></p>
+<p>另外：当前工作目录和最新的仓库版本，即HEAD所指的版本比较</p>
+<p><code>git diff HEAD</code></p>
+<h4 id="4-比较暂存区域与仓库"><a href="#4-比较暂存区域与仓库" class="headerlink" title="(4)比较暂存区域与仓库"></a>(4)比较暂存区域与仓库</h4><p>1.仓库最新的版本快照与暂存区文件比较</p>
+<p><code>git diff --cached</code></p>
+<p>2.指定仓库的一个版本快照与暂存区文件比较</p>
+<p><code>git diff --cached 版本号</code></p>
+<h3 id="（六）修改"><a href="#（六）修改" class="headerlink" title="（六）修改"></a>（六）修改</h3><h4 id="1-修改提交说明"><a href="#1-修改提交说明" class="headerlink" title="(1)修改提交说明"></a>(1)修改提交说明</h4><p>如果你想改变之前的提交说明，那么就</p>
+<p><code>git commit --amend</code></p>
+<p>或者直接</p>
+<p><code>git commit --amend -m &quot;你改变后的提交说明&quot;</code></p>
+<h4 id="2-删除文件"><a href="#2-删除文件" class="headerlink" title="(2)删除文件"></a>(2)删除文件</h4><ul>
+<li><p><code>git rm 文件名</code>：删除暂存区与工作目录里的该文件，仓库里的不会删除，如果想删除仓库里的请回滚</p>
+</li>
+<li><p><code>git rm -f 文件名</code>：如果暂存区与工作目录里的文件出现同名不同内容的情况，用上面那种就会提示你有情况了，你可以用该命令强制一起删除</p>
+</li>
+<li><p><code>git rm --cached 文件名</code>：只删除暂存区的文件而不删除工作目录下的文件</p>
+</li>
+</ul>
+<h4 id="3-文件重命名"><a href="#3-文件重命名" class="headerlink" title="(3)文件重命名"></a>(3)文件重命名</h4><p><code>git mv 原文件名 新文件名</code></p>
+<h2 id="四、分支"><a href="#四、分支" class="headerlink" title="四、分支"></a>四、分支</h2><blockquote>
+<p>关于什么是git分支，他有什么优点，为什么要创建分支，自行百度</p>
+</blockquote>
+<h3 id="（一）创建分支"><a href="#（一）创建分支" class="headerlink" title="（一）创建分支"></a>（一）创建分支</h3><p><code>git branch 分支名称</code></p>
+<h3 id="（二）切换分支"><a href="#（二）切换分支" class="headerlink" title="（二）切换分支"></a>（二）切换分支</h3><blockquote>
+<p>把HEAD指向的分支切换到你需要的分支上来</p>
+</blockquote>
+<p><code>git checkout 分支名</code></p>
+<p>【偷懒】创建新分支并且切换到新分支里去，连续做两步</p>
+<p><code>git checkout -b 分支名</code></p>
+<h3 id="（三）合并分支"><a href="#（三）合并分支" class="headerlink" title="（三）合并分支"></a>（三）合并分支</h3><p>把别处的分支合并到你现在HEAD所指向的分支上来</p>
+<p><code>git merge 分支名</code></p>
+<h3 id="（四）删除分支"><a href="#（四）删除分支" class="headerlink" title="（四）删除分支"></a>（四）删除分支</h3><p><code>git branch -d 分支名</code></p>
+<p>或者写两个小横线的全名</p>
+<p><code>git branch --delete 分支名</code></p>
+<h3 id="（五）匿名分支"><a href="#（五）匿名分支" class="headerlink" title="（五）匿名分支"></a>（五）匿名分支</h3><p><code>git checkout HEAD~</code></p>
+<p>HEAD处于游离状态，你可以对这个创建的匿名分支作实验性操作，当HEAD回到正常分支时匿名分支会销毁</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/git/">git</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/git/">git</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/05/Git-%E9%93%BE%E6%8E%A5-Github%E8%BF%9C%E7%A8%8B%E5%BA%93/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">【 Git 】Git 链接 Github远程库</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/05/%E3%80%90-CSS-%E3%80%91%E5%85%83%E7%B4%A0%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/">
+                        <span class="hidden-mobile">【 CSS 】元素水平垂直居中</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <div id="vcomments"></div>
+  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var notify = 'true' === 'true';
+    var verify = 'true' === 'true';
+    var oldLoad = window.onload;
+    window.onload = function () {
+      new Valine({
+        el: '#vcomments',
+        notify: notify,
+        verify: verify,
+        app_id: "plKXUYr4j5DVFgq4MozzqNhk-gzGzoHsz",
+        app_key: "HwvSIxwKVXvkOsLK8YaqnU1u",
+        placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+        avatar: "/retro",
+        meta: ['nick', 'mail', 'link'],
+        pageSize: "10",
+      });
+      oldLoad && oldLoad();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "【 Git 】Git使用手册&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 100,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

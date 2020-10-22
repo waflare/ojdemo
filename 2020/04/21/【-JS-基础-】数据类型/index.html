@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/aikan.png">
+  <link rel="icon" type="image/png" href="/img/aikan.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Warren">
+  <meta name="keywords" content="">
+  <title>【 JS 基础 】数据类型 - Warren blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Warren Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期二, 四月 21日 2020, 10:03 上午
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.4k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="javascript-数据类型"><a href="#javascript-数据类型" class="headerlink" title="javascript 数据类型"></a>javascript 数据类型</h1><h2 id="一、分类"><a href="#一、分类" class="headerlink" title="一、分类"></a>一、分类</h2><ol>
+<li><p>六种原始数据类型</p>
+<ul>
+<li><p>undefined</p>
+</li>
+<li><p>null</p>
+</li>
+<li><p>boolean</p>
+</li>
+<li><p>number</p>
+</li>
+<li><p>string</p>
+</li>
+<li><p>symbol（ES6 引入）</p>
+</li>
+</ul>
+</li>
+<li><p>引用类型</p>
+<ul>
+<li>Object 对象<ul>
+<li>普通对象 Object</li>
+<li>数组对象 Array</li>
+<li>正则对象 RegExp</li>
+<li>日期对象 Date</li>
+<li>数学函数 Math</li>
+<li>函数对象 Function</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="二、原始数据类型"><a href="#二、原始数据类型" class="headerlink" title="二、原始数据类型"></a>二、原始数据类型</h2><h3 id="（1）undefined"><a href="#（1）undefined" class="headerlink" title="（1）undefined"></a>（1）undefined</h3><p>未经初始化的变量默认值为 undefined，typeof 值为 undefined 的不一定是未经初始化，也可能是未声明。</p>
+<pre><code class="js">var a;
+alert(typeof a); // &quot;undefined&quot;
+alert(typeof b); // 未声明，依旧是 &quot;undefined&quot;
+alert(a); // &quot;undefined&quot;
+alert(b); // error</code></pre>
+<h3 id="（2）null"><a href="#（2）null" class="headerlink" title="（2）null"></a>（2）null</h3><p>null 是对象吗？不是</p>
+<pre><code class="js">var a = null;
+alert(typeof a); // &quot;object&quot;</code></pre>
+<p>使用 typeof 检查 null 返回的值为 “object”，理所当然是一个 Object 对象，但是这只是 JS 存在的一个悠久 Bug。在 JS 的最初版本中使用的是 32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头代表是对象然而 null 表示为全零，所以将它错误的判断为 object 。</p>
+<h3 id="（3）boolean"><a href="#（3）boolean" class="headerlink" title="（3）boolean"></a>（3）boolean</h3><table>
+<thead>
+<tr>
+<th align="center">数据类型</th>
+<th align="center">转换为true</th>
+<th align="center">转换为false</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">boolean</td>
+<td align="center">true</td>
+<td align="center">false</td>
+</tr>
+<tr>
+<td align="center">string</td>
+<td align="center">非空字符串</td>
+<td align="center">“”（空字符串）</td>
+</tr>
+<tr>
+<td align="center">number</td>
+<td align="center">非零数字值</td>
+<td align="center">0和NaN</td>
+</tr>
+<tr>
+<td align="center">object</td>
+<td align="center">任何对象</td>
+<td align="center">null</td>
+</tr>
+<tr>
+<td align="center">undefined</td>
+<td align="center">N/A</td>
+<td align="center">undefined</td>
+</tr>
+</tbody></table>
+<h3 id="（4）number"><a href="#（4）number" class="headerlink" title="（4）number"></a>（4）number</h3><ul>
+<li><p>八进制</p>
+<p>  以0开头，且有效的八进制数值</p>
+<pre><code class="js">  var a = 070; // 有效八进制，解析为 56
+  var b = 080; // 无效八进制，解析为 80</code></pre>
+</li>
+<li><p>十六进制</p>
+<p>  以0x开头，且有效的十六进制数值</p>
+<pre><code class="js">  var a = 0xA; // 有效十六进制，解析为10
+  var b = 0xQ; // 无效十六进制，报 error</code></pre>
+</li>
+<li><p>浮点数值</p>
+<p>  所谓浮点数就是该数值必须包含一个小数点，并且小数点后面必须至少有一位数字。浮点数值占用的空间是整型的两倍。</p>
+<ul>
+<li><p>科学记数法</p>
+<pre><code class="js">  var a = 1.125e5; // 112500</code></pre>
+</li>
+<li><p><code>0.1 + 0.2 为什么不等于 0.3</code></p>
+<p>  0.1和0.2在转换成二进制后会无限循环，由于标准位数的限制后面多余的位数会被截掉，此时就已经出现了精度的损失，相加后因浮点数小数位的限制而截断的二进制数字在转换为十进制就会变成0.30000000000000004。</p>
+</li>
+</ul>
+</li>
+<li><p>数值范围</p>
+<p>  5e-324 &lt; number &lt; 1.7976931348623157e+308</p>
+<p>  超过这个范围的数将自动转换为 Infinity 值，-Infinity（负无穷）或 +Infinity（正无穷），Infinity 值不参与运算。</p>
+</li>
+<li><p>NaN 非数值</p>
+<p>  在很多语言里非数值参与数值运算会停止代码执行，但在 JS 里会返回 NaN 从而不影响后续代码运行。</p>
+<pre><code class="js">  alert(&quot;adf&quot;*2); // 结果为 NaN</code></pre>
+<p>  任何有 NaN 参与的数值运算结果都为 NaN。</p>
+<p>  isNaN() 可以判断是否 “ 不是数值”</p>
+<pre><code class="js">  alert(isNaN(NaN)); // true
+  alert(isNaN(10)); // false 10是数值
+  alert(isNaN(&quot;10&quot;)); // false 字符串“10”可以转换成数值
+  alert(isNaN(&quot;blue&quot;)); // true 不能转换为数值
+  alert(isNaN(true)); // false 可以转换为数值 1</code></pre>
+</li>
+<li><p>数值转换</p>
+<p>  Number(), parseInt(), parseFloat()</p>
+</li>
+</ul>
+<h3 id="（5）string"><a href="#（5）string" class="headerlink" title="（5）string"></a>（5）string</h3><p>字符串创建后不可改变，字符串变量只能销毁后赋新值。</p>
+<ul>
+<li><p>toString()</p>
+<p>  可以带参数，表示以n进制形式输出</p>
+<pre><code class="js">  var num = 10;
+  alert(num.toString(2)); // &quot;1010&quot;</code></pre>
+<p>  <code>如果是 null、undefined 不能使用该方法</code></p>
+</li>
+<li><p>String()</p>
+<ul>
+<li>有 toString() 方法的调用该方法</li>
+<li>如果是 null，返回 “null”</li>
+<li>如果是 undefined，返回 “undefined”</li>
+</ul>
+</li>
+</ul>
+<h3 id="（6）symbol"><a href="#（6）symbol" class="headerlink" title="（6）symbol"></a>（6）symbol</h3><p>它的功能类似于一种标识唯一性的ID。通常情况下，我们可以通过调用<code>Symbol()</code>函数来创建一个Symbol实例：</p>
+<pre><code class="js">let s = Symbol();
+typeof s; // &quot;symbol&quot;</code></pre>
+<p>上面代码中，变量<code>s</code>就是一个独一无二的值。</p>
+<p><strong><code>Symbol</code>函数可以接受一个字符串作为参数</strong>，表示对 Symbol 实例的描述，主要是为了在控制台显示，或者转为字符串时，比较容易区分。</p>
+<pre><code class="js">let s1 = Symbol(&#39;foo&#39;);
+let s2 = Symbol(&#39;bar&#39;);
+
+s1 // Symbol(foo)
+s2 // Symbol(bar)
+
+s1.toString() // &quot;Symbol(foo)&quot;
+s2.toString() // &quot;Symbol(bar)&quot;</code></pre>
+<p><strong>Symbol 的参数也可以是一个对象</strong>，就会调用该对象的<code>toString</code>方法，将其转为字符串，然后才生成一个 Symbol 值。</p>
+<pre><code class="js">const obj = {
+  toString() {
+    return &#39;abc&#39;;
+  }
+};
+const sym = Symbol(obj);
+sym // Symbol(abc)</code></pre>
+<p>有人会想 Symbol 的参数相同的是不是返回一样的值</p>
+<pre><code class="js">// 没有参数的情况
+let s1 = Symbol();
+let s2 = Symbol();
+
+s1 === s2 // false
+
+// 有参数的情况
+let s1 = Symbol(&#39;foo&#39;);
+let s2 = Symbol(&#39;foo&#39;);
+
+s1 === s2 // false</code></pre>
+<p>很明显，结果是<strong>没有参数或者参数相同返回值都是不一样的。</strong></p>
+<p><strong>Symbol 不能参与运算，可以显式转为字符串，也可以转为布尔值，但是不能转为数值。</strong></p>
+<p><strong>Symbol 还有 description 属性显示 Symbol 描述</strong></p>
+<pre><code class="js">const sym = Symbol(&#39;foo&#39;);
+sym.description // &quot;foo&quot;</code></pre>
+<p>有时，我们希望重新使用同一个 Symbol 值</p>
+<ul>
+<li><p><code>Symbol.for()</code></p>
+<pre><code class="js">  let s1 = Symbol.for(&#39;foo&#39;);
+  let s2 = Symbol.for(&#39;foo&#39;);
+
+  s1 === s2 // true</code></pre>
+<p>  <code>Symbol.for()</code>与<code>Symbol()</code>这两种写法，都会生成新的 Symbol。它们的区别是，前者会被登记在全局环境中供搜索，后者不会。<code>Symbol.for()</code>不会每次调用就返回一个新的 Symbol 类型的值，而是会先检查给定的<code>key</code>是否已经存在，如果不存在才会新建一个值。比如，如果你调用<code>Symbol.for(&quot;cat&quot;)</code>30 次，每次都会返回同一个 Symbol 值，但是调用<code>Symbol(&quot;cat&quot;)</code>30 次，会返回 30 个不同的 Symbol 值。</p>
+</li>
+</ul>
+<p>返回一个已登记的 Symbol 类型值的<code>key</code>。</p>
+<ul>
+<li><p><code>Symbol.keyFor()</code></p>
+<pre><code class="js">  let s1 = Symbol.for(&quot;foo&quot;);
+  Symbol.keyFor(s1) // &quot;foo&quot;
+
+  let s2 = Symbol(&quot;foo&quot;);
+  Symbol.keyFor(s2) // undefined 未登记在全局环境中</code></pre>
+</li>
+</ul>
+<p>注意，<code>Symbol.for()</code>为 Symbol 值登记的名字，是全局环境的，不管有没有在全局环境运行。</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/JS/">JS</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JS/">JS</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">数据类型</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/18/%E3%80%90-CSS-%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFBFC/">
+                        <span class="hidden-mobile">【 CSS 】什么是BFC</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+                <!-- Comments -->
+                <div class="comments" id="comments">
+                  
+                  
+  <div id="vcomments"></div>
+  <script defer src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var notify = 'true' === 'true';
+    var verify = 'true' === 'true';
+    var oldLoad = window.onload;
+    window.onload = function () {
+      new Valine({
+        el: '#vcomments',
+        notify: notify,
+        verify: verify,
+        app_id: "plKXUYr4j5DVFgq4MozzqNhk-gzGzoHsz",
+        app_key: "HwvSIxwKVXvkOsLK8YaqnU1u",
+        placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+        avatar: "/retro",
+        meta: ['nick', 'mail', 'link'],
+        pageSize: "10",
+      });
+      oldLoad && oldLoad();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://valine.js.org" target="_blank" rel="nofollow noopener noopener">comments
+      powered by Valine.</a></noscript>
+
+
+                </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "【 JS 基础 】数据类型&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 100,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "§"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script type="text/javascript">
+      //定义获取词语下标
+      var a_idx = 0;
+      jQuery(document).ready(function ($) {
+        //点击body时触发事件
+        $("body").click(function (e) {
+          //需要显示的词语
+          var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正", "法治", "爱国", "敬业", "诚信", "友善");
+          //设置词语给span标签
+          var $i = $("<span/>").text(a[a_idx]);
+          //下标等于原来下标+1  余 词语总数
+          a_idx = (a_idx + 1) % a.length;
+          //获取鼠标指针的位置，分别相对于文档的左和右边缘。
+          //获取x和y的指针坐标
+          var x = e.pageX, y = e.pageY;
+          //在鼠标的指针的位置给$i定义的span标签添加css样式
+          $i.css({
+            "z-index": 999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": rand_color()
+          });
+          // 随机颜色
+          function rand_color() {
+            return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+          }
+          //在body添加这个标签
+          $("body").append($i);
+          //animate() 方法执行 CSS 属性集的自定义动画。
+          //该方法通过CSS样式将元素从一个状态改变为另一个状态。CSS属性值是逐渐改变的，这样就可以创建动画效果。
+          //详情请看http://www.w3school.com.cn/jquery/effect_animate.asp
+          $i.animate({
+            //将原来的位置向上移动180
+            "top": y - 180,
+            "opacity": 0
+            //1500动画的速度
+          }, 1500, function () {
+            //时间到了自动删除
+            $i.remove();
+          });
+        });
+      })
+      ;
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>【 JS 基础 】数据类型</title>
+    <link href="/2020/04/21/%E3%80%90-JS-%E5%9F%BA%E7%A1%80-%E3%80%91%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <url>/2020/04/21/%E3%80%90-JS-%E5%9F%BA%E7%A1%80-%E3%80%91%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+    
+    <content type="html"><![CDATA[<h1 id="javascript-数据类型"><a href="#javascript-数据类型" class="headerlink" title="javascript 数据类型"></a>javascript 数据类型</h1><h2 id="一、分类"><a href="#一、分类" class="headerlink" title="一、分类"></a>一、分类</h2><ol><li><p>六种原始数据类型</p><ul><li><p>undefined</p></li><li><p>null</p></li><li><p>boolean</p></li><li><p>number</p></li><li><p>string</p></li><li><p>symbol（ES6 引入）</p></li></ul></li><li><p>引用类型</p><ul><li>Object 对象<ul><li>普通对象 Object</li><li>数组对象 Array</li><li>正则对象 RegExp</li><li>日期对象 Date</li><li>数学函数 Math</li><li>函数对象 Function</li></ul></li></ul></li></ol><h2 id="二、原始数据类型"><a href="#二、原始数据类型" class="headerlink" title="二、原始数据类型"></a>二、原始数据类型</h2><h3 id="（1）undefined"><a href="#（1）undefined" class="headerlink" title="（1）undefined"></a>（1）undefined</h3><p>未经初始化的变量默认值为 undefined，typeof 值为 undefined 的不一定是未经初始化，也可能是未声明。</p><pre><code class="js">var a;alert(typeof a); // &quot;undefined&quot;alert(typeof b); // 未声明，依旧是 &quot;undefined&quot;alert(a); // &quot;undefined&quot;alert(b); // error</code></pre><h3 id="（2）null"><a href="#（2）null" class="headerlink" title="（2）null"></a>（2）null</h3><p>null 是对象吗？不是</p><pre><code class="js">var a = null;alert(typeof a); // &quot;object&quot;</code></pre><p>使用 typeof 检查 null 返回的值为 “object”，理所当然是一个 Object 对象，但是这只是 JS 存在的一个悠久 Bug。在 JS 的最初版本中使用的是 32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头代表是对象然而 null 表示为全零，所以将它错误的判断为 object 。</p><h3 id="（3）boolean"><a href="#（3）boolean" class="headerlink" title="（3）boolean"></a>（3）boolean</h3><table><thead><tr><th align="center">数据类型</th><th align="center">转换为true</th><th align="center">转换为false</th></tr></thead><tbody><tr><td align="center">boolean</td><td align="center">true</td><td align="center">false</td></tr><tr><td align="center">string</td><td align="center">非空字符串</td><td align="center">“”（空字符串）</td></tr><tr><td align="center">number</td><td align="center">非零数字值</td><td align="center">0和NaN</td></tr><tr><td align="center">object</td><td align="center">任何对象</td><td align="center">null</td></tr><tr><td align="center">undefined</td><td align="center">N/A</td><td align="center">undefined</td></tr></tbody></table><h3 id="（4）number"><a href="#（4）number" class="headerlink" title="（4）number"></a>（4）number</h3><ul><li><p>八进制</p><p>  以0开头，且有效的八进制数值</p><pre><code class="js">  var a = 070; // 有效八进制，解析为 56  var b = 080; // 无效八进制，解析为 80</code></pre></li><li><p>十六进制</p><p>  以0x开头，且有效的十六进制数值</p><pre><code class="js">  var a = 0xA; // 有效十六进制，解析为10  var b = 0xQ; // 无效十六进制，报 error</code></pre></li><li><p>浮点数值</p><p>  所谓浮点数就是该数值必须包含一个小数点，并且小数点后面必须至少有一位数字。浮点数值占用的空间是整型的两倍。</p><ul><li><p>科学记数法</p><pre><code class="js">  var a = 1.125e5; // 112500</code></pre></li><li><p><code>0.1 + 0.2 为什么不等于 0.3</code></p><p>  0.1和0.2在转换成二进制后会无限循环，由于标准位数的限制后面多余的位数会被截掉，此时就已经出现了精度的损失，相加后因浮点数小数位的限制而截断的二进制数字在转换为十进制就会变成0.30000000000000004。</p></li></ul></li><li><p>数值范围</p><p>  5e-324 &lt; number &lt; 1.7976931348623157e+308</p><p>  超过这个范围的数将自动转换为 Infinity 值，-Infinity（负无穷）或 +Infinity（正无穷），Infinity 值不参与运算。</p></li><li><p>NaN 非数值</p><p>  在很多语言里非数值参与数值运算会停止代码执行，但在 JS 里会返回 NaN 从而不影响后续代码运行。</p><pre><code class="js">  alert(&quot;adf&quot;*2); // 结果为 NaN</code></pre><p>  任何有 NaN 参与的数值运算结果都为 NaN。</p><p>  isNaN() 可以判断是否 “ 不是数值”</p><pre><code class="js">  alert(isNaN(NaN)); // true  alert(isNaN(10)); // false 10是数值  alert(isNaN(&quot;10&quot;)); // false 字符串“10”可以转换成数值  alert(isNaN(&quot;blue&quot;)); // true 不能转换为数值  alert(isNaN(true)); // false 可以转换为数值 1</code></pre></li><li><p>数值转换</p><p>  Number(), parseInt(), parseFloat()</p></li></ul><h3 id="（5）string"><a href="#（5）string" class="headerlink" title="（5）string"></a>（5）string</h3><p>字符串创建后不可改变，字符串变量只能销毁后赋新值。</p><ul><li><p>toString()</p><p>  可以带参数，表示以n进制形式输出</p><pre><code class="js">  var num = 10;  alert(num.toString(2)); // &quot;1010&quot;</code></pre><p>  <code>如果是 null、undefined 不能使用该方法</code></p></li><li><p>String()</p><ul><li>有 toString() 方法的调用该方法</li><li>如果是 null，返回 “null”</li><li>如果是 undefined，返回 “undefined”</li></ul></li></ul><h3 id="（6）symbol"><a href="#（6）symbol" class="headerlink" title="（6）symbol"></a>（6）symbol</h3><p>它的功能类似于一种标识唯一性的ID。通常情况下，我们可以通过调用<code>Symbol()</code>函数来创建一个Symbol实例：</p><pre><code class="js">let s = Symbol();typeof s; // &quot;symbol&quot;</code></pre><p>上面代码中，变量<code>s</code>就是一个独一无二的值。</p><p><strong><code>Symbol</code>函数可以接受一个字符串作为参数</strong>，表示对 Symbol 实例的描述，主要是为了在控制台显示，或者转为字符串时，比较容易区分。</p><pre><code class="js">let s1 = Symbol(&#39;foo&#39;);let s2 = Symbol(&#39;bar&#39;);s1 // Symbol(foo)s2 // Symbol(bar)s1.toString() // &quot;Symbol(foo)&quot;s2.toString() // &quot;Symbol(bar)&quot;</code></pre><p><strong>Symbol 的参数也可以是一个对象</strong>，就会调用该对象的<code>toString</code>方法，将其转为字符串，然后才生成一个 Symbol 值。</p><pre><code class="js">const obj = {  toString() {    return &#39;abc&#39;;  }};const sym = Symbol(obj);sym // Symbol(abc)</code></pre><p>有人会想 Symbol 的参数相同的是不是返回一样的值</p><pre><code class="js">// 没有参数的情况let s1 = Symbol();let s2 = Symbol();s1 === s2 // false// 有参数的情况let s1 = Symbol(&#39;foo&#39;);let s2 = Symbol(&#39;foo&#39;);s1 === s2 // false</code></pre><p>很明显，结果是<strong>没有参数或者参数相同返回值都是不一样的。</strong></p><p><strong>Symbol 不能参与运算，可以显式转为字符串，也可以转为布尔值，但是不能转为数值。</strong></p><p><strong>Symbol 还有 description 属性显示 Symbol 描述</strong></p><pre><code class="js">const sym = Symbol(&#39;foo&#39;);sym.description // &quot;foo&quot;</code></pre><p>有时，我们希望重新使用同一个 Symbol 值</p><ul><li><p><code>Symbol.for()</code></p><pre><code class="js">  let s1 = Symbol.for(&#39;foo&#39;);  let s2 = Symbol.for(&#39;foo&#39;);  s1 === s2 // true</code></pre><p>  <code>Symbol.for()</code>与<code>Symbol()</code>这两种写法，都会生成新的 Symbol。它们的区别是，前者会被登记在全局环境中供搜索，后者不会。<code>Symbol.for()</code>不会每次调用就返回一个新的 Symbol 类型的值，而是会先检查给定的<code>key</code>是否已经存在，如果不存在才会新建一个值。比如，如果你调用<code>Symbol.for(&quot;cat&quot;)</code>30 次，每次都会返回同一个 Symbol 值，但是调用<code>Symbol(&quot;cat&quot;)</code>30 次，会返回 30 个不同的 Symbol 值。</p></li></ul><p>返回一个已登记的 Symbol 类型值的<code>key</code>。</p><ul><li><p><code>Symbol.keyFor()</code></p><pre><code class="js">  let s1 = Symbol.for(&quot;foo&quot;);  Symbol.keyFor(s1) // &quot;foo&quot;  let s2 = Symbol(&quot;foo&quot;);  Symbol.keyFor(s2) // undefined 未登记在全局环境中</code></pre></li></ul><p>注意，<code>Symbol.for()</code>为 Symbol 值登记的名字，是全局环境的，不管有没有在全局环境运行。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>JS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JS</tag>
+      
+      <tag>数据类型</tag>
+      
+      <tag>基础知识</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 CSS 】什么是BFC</title>
+    <link href="/2020/04/18/%E3%80%90-CSS-%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFBFC/"/>
+    <url>/2020/04/18/%E3%80%90-CSS-%E3%80%91%E4%BB%80%E4%B9%88%E6%98%AFBFC/</url>
+    
+    <content type="html"><![CDATA[<h1 id="BFC-详情"><a href="#BFC-详情" class="headerlink" title="BFC 详情"></a>BFC 详情</h1><h2 id="一、什么是BFC"><a href="#一、什么是BFC" class="headerlink" title="一、什么是BFC"></a>一、什么是BFC</h2><blockquote><p>W3C对BFC的定义如下： 浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为”visiable”的块级盒子，都会为他们的内容创建新的BFC（Block Formatting Context， 即块级格式上下文），它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。</p></blockquote><ul><li>浮动元素 float</li><li>绝对定位元素 position: absolute 或 fixed;</li><li>非块级盒子的块级容器 inline-blocks, table-cells, 和 table-captions</li><li>overflow值 hidden scroll auto inherit ，不为visible</li></ul><h2 id="二、BFC-触发的方式"><a href="#二、BFC-触发的方式" class="headerlink" title="二、BFC 触发的方式"></a>二、BFC 触发的方式</h2><blockquote><p>一个HTML元素要创建BFC，则满足下列的任意一个或多个条件即可：</p></blockquote><ul><li>根元素，即HTML标签</li><li>浮动元素 float 非 none</li><li>绝对定位元素 position: absolute 或 fixed;</li><li>行内块级元素 display: inline-blocks</li><li>表格单元格 display: table-cells (HTML 表格单元格默认为该值)</li><li>表格标题 display: table-captions(HTML 表格标题默认为该值)</li><li>匿名表格单元格元素 元素的 display为 table、table-row、 table-row-group、table-header-group、table-footer-group（分别是HTML table、row、tbody、thead、tfoot的默认属性）或 inline-table</li><li>overflow 值不为 visible 的块元素</li><li>弹性元素 display为 flex 或 inline-flex元素的直接子元素</li><li>网格元素 display为 grid 或 inline-grid 元素的直接子元素 等等</li></ul><h2 id="三、BFC-的渲染规则"><a href="#三、BFC-的渲染规则" class="headerlink" title="三、BFC 的渲染规则"></a>三、BFC 的渲染规则</h2><ol><li>BFC 垂直方向边距重叠</li><li>BFC 的区域不会与浮动元素的 box 重叠</li><li>BFC 是一个独立的容器，外面的元素不会影响里面的元素</li><li>计算 BFC 高度时，浮动元素也会计算在内</li></ol><h2 id="四、BFC-的应用"><a href="#四、BFC-的应用" class="headerlink" title="四、BFC 的应用"></a>四、BFC 的应用</h2><h3 id="1、高度塌陷，清除浮动"><a href="#1、高度塌陷，清除浮动" class="headerlink" title="1、高度塌陷，清除浮动"></a>1、高度塌陷，清除浮动</h3><p>根据上述 BFC 渲染规则第四点很容易就能知道 BFC 可以用于解决浮动元素导致的高度塌陷问题</p><p>例如：</p><blockquote><p>html</p></blockquote><pre><code class="html">&lt;div id=&quot;context&quot;&gt;    &lt;div class=&quot;float&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre><blockquote><p>css</p></blockquote><pre><code class="css">#context {    width: 200px;    border: 2px red solid;}.float {    width: 100px;    height: 100px;    background-color: blue;    float: left;}</code></pre><p>就会造成高度塌陷，导致如下效果：</p><p><img src="/img/image-20200418104625238.png" srcset="/img/loading.gif" alt="image-20200418104625238"></p><p>将 context 触发BFC就能将浮动元素的高度也加入计算，从而撑起父盒子的高度，解决高度塌陷问题</p><p>如下，css 改为：</p><pre><code class="css">#context {    width: 200px;    border: 2px red solid;    overflow: hidden; // 添加一句}.float {    width: 100px;    height: 100px;    background-color: blue;    float: left;}</code></pre><h3 id="2、阻止垂直外边距折叠"><a href="#2、阻止垂直外边距折叠" class="headerlink" title="2、阻止垂直外边距折叠"></a>2、阻止垂直外边距折叠</h3><p>属于同一个BFC的两个相邻块级子元素（元素都要在文档流中）的上下margin会发生重叠—— 分为两个BFC就可以消除这种margin 重叠</p><p>例如：</p><blockquote><p>html</p></blockquote><pre><code class="html">&lt;div id=&quot;box&quot;&gt;    &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;    &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre><blockquote><p>css</p></blockquote><pre><code class="css">#box {    width: 300px;    background-color: red;    overflow: hidden;}.item {    width: 100%;    height: 50px;    background-color: blue;    margin: 20px 0;}</code></pre><p>效果如下：</p><p><img src="/img/image-20200418105912502.png" srcset="/img/loading.gif" alt="image-20200418105912502"></p><p>在同一个BFC中的相邻两个块级元素垂直外边距折叠了，中间的红色空间隙本来应该是 20 + 20 的，结果只有 20，这个折叠是会选择边距大的吞并边距小的的，比如 40 + 20 的上下边距叠在一起就会变成 40。</p><p>那么如果要使这个垂直边距变回简单的加法，就需要将相邻的块级元素放在不同的 BFC 里面</p><p>例如：</p><blockquote><p>html</p></blockquote><pre><code class="html">&lt;div id=&quot;box&quot;&gt;    &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;    &lt;div class=&quot;clr&quot;&gt;        &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><blockquote><p>css</p></blockquote><pre><code class="css">#box {    width: 300px;    background-color: red;    overflow: hidden;}.item {    width: 100%;    height: 50px;    background-color: blue;    margin: 20px 0;}.clr {    overflow: hidden; // 再套一个}</code></pre><p>效果：</p><p><img src="/img/image-20200418110623645.png" srcset="/img/loading.gif" alt="image-20200418110623645"></p><p>就阻止了这种边距的重叠效果。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CSS</tag>
+      
+      <tag>BFC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 CSS 】FlexBox 实战</title>
+    <link href="/2020/04/11/%E3%80%90-CSS-%E3%80%91FlexBox-%E5%AE%9E%E6%88%98/"/>
+    <url>/2020/04/11/%E3%80%90-CSS-%E3%80%91FlexBox-%E5%AE%9E%E6%88%98/</url>
+    
+    <content type="html"><![CDATA[<h1 id="FlexBox-实战"><a href="#FlexBox-实战" class="headerlink" title="FlexBox 实战"></a>FlexBox 实战</h1><blockquote><p>文章学习于阮一峰老师 <a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="noopener">布局教程</a></p></blockquote><h1>骰子布局练习</h1><p>先设置基础css、html</p><pre><code class="html">&lt;div class=&quot;box&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">// 骰子面.box {    width: 300px;    height: 300px;    margin: 30px;    border: 2px black solid;    border-radius: 5px;}// 包圆点的盒子.dotBox {    width: 100px;    height: 100px;    display: flex;    align-items: center;    justify-content: center;}// 圆点.dot {    width: 45px;    height: 45px;    background-color: black;    border-radius: 50%;}</code></pre><p>效果：</p><p><img src="/img/image-20200411164648203.png" srcset="/img/loading.gif" alt="image-20200411164648203"></p><h2 id="一、骰子面划分"><a href="#一、骰子面划分" class="headerlink" title="一、骰子面划分"></a>一、骰子面划分</h2><p><img src="/img/image-20200411170305912.png" srcset="/img/loading.gif" alt="image-20200411170305912"></p><p>按九个点位的布局，下面将使用 flex box 布局将容器里的项目在九个点随意的放置。</p><h2 id="二、单项目"><a href="#二、单项目" class="headerlink" title="二、单项目"></a>二、单项目</h2><h3 id="1-号点位"><a href="#1-号点位" class="headerlink" title="1 号点位"></a>1 号点位</h3><p><img src="/img/image-20200411164648203.png" srcset="/img/loading.gif" alt="image-20200411164648203"></p><blockquote><p>直接文档流单个项目就在1号点位了</p></blockquote><h3 id="2-号点位"><a href="#2-号点位" class="headerlink" title="2 号点位"></a>2 号点位</h3><p><img src="/img/image-20200411171106318.png" srcset="/img/loading.gif" alt="image-20200411171106318"></p><blockquote><p>设置 骰子面为 flex 容器，然后设置 justify-content 为 center 让 圆点居中</p></blockquote><pre><code class="html">&lt;div class=&quot;box one-2&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.one-2 {    display: flex;    justify-content: center;}</code></pre><h3 id="3-号点位"><a href="#3-号点位" class="headerlink" title="3 号点位"></a>3 号点位</h3><p><img src="/img/image-20200411171458761.png" srcset="/img/loading.gif" alt="image-20200411171458761"></p><blockquote><p>设置 骰子面为 flex 容器，然后设置 justify-content 为 flex-end 让 圆点居右</p></blockquote><pre><code class="html">&lt;div class=&quot;box one-3&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.one-3 {    display: flex;    justify-content: flex-end;}</code></pre><h3 id="4-号点位"><a href="#4-号点位" class="headerlink" title="4 号点位"></a>4 号点位</h3><p><img src="/img/image-20200411172706046.png" srcset="/img/loading.gif" alt="image-20200411172706046"></p><blockquote><p>设置 align-items 为 center 让圆点交叉轴方向居中</p></blockquote><pre><code class="html">&lt;div class=&quot;box one-4&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.one-4 {    display: flex;    align-items: center;}</code></pre><h3 id="5-号点位"><a href="#5-号点位" class="headerlink" title="5 号点位"></a>5 号点位</h3><p><img src="/img/image-20200411173310889.png" srcset="/img/loading.gif" alt="image-20200411173310889"></p><blockquote><p>设置 justify-content 为 center 水平居中，设置 align-items 为 center 垂直居中</p></blockquote><pre><code class="html">&lt;div class=&quot;box one-5&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.one-5 {    display: flex;    justify-content: center;    align-items: center;}</code></pre><h3 style='color: red'>下面几个单项的只放css了，就改一下类名 one-X </h3><h3 id="6-号点位"><a href="#6-号点位" class="headerlink" title="6 号点位"></a>6 号点位</h3><p><img src="/img/image-20200411173845945.png" srcset="/img/loading.gif" alt="image-20200411173845945"></p><pre><code class="css">.one-6 {    display: flex;    justify-content: flex-end;    align-items: center;}</code></pre><h3 id="7-号点位"><a href="#7-号点位" class="headerlink" title="7 号点位"></a>7 号点位</h3><p><img src="/img/image-20200411174027592.png" srcset="/img/loading.gif" alt="image-20200411174027592"></p><pre><code class="css">.one-7 {    display: flex;    align-items: flex-end;}</code></pre><h3 id="8-号点位"><a href="#8-号点位" class="headerlink" title="8 号点位"></a>8 号点位</h3><p><img src="/img/image-20200411174425458.png" srcset="/img/loading.gif" alt="image-20200411174425458"></p><pre><code class="css">.one-8 {    display: flex;    justify-content: center;    align-items: flex-end;}</code></pre><h3 id="9-号点位"><a href="#9-号点位" class="headerlink" title="9 号点位"></a>9 号点位</h3><p><img src="/img/image-20200411174455809.png" srcset="/img/loading.gif" alt="image-20200411174455809"></p><pre><code class="css">.one-9 {    display: flex;    justify-content: flex-end;    align-items: flex-end;}</code></pre><h2 id="三、双项目"><a href="#三、双项目" class="headerlink" title="三、双项目"></a>三、双项目</h2><h3 id="1-3-点位"><a href="#1-3-点位" class="headerlink" title="1-3 点位"></a>1-3 点位</h3><p><img src="/img/image-20200411180028036.png" srcset="/img/loading.gif" alt="image-20200411180028036"></p><blockquote><p>设置两端对齐， justify-content 为 space-between</p></blockquote><pre><code class="html">&lt;div class=&quot;box two-1-3&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.two-1-3 {    display: flex;    justify-content: space-between;}</code></pre><h3 id="1-7-点位"><a href="#1-7-点位" class="headerlink" title="1-7 点位"></a>1-7 点位</h3><p><img src="/img/image-20200411180657477.png" srcset="/img/loading.gif" alt="image-20200411180657477"></p><blockquote><p>设置主轴为竖直方向由上往下 flex-direction 为 column</p><p>设置两端对齐， justify-content 为 space-between</p></blockquote><pre><code class="html">&lt;div class=&quot;box two-1-7&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.two-1-7 {    display: flex;    flex-direction: column;    justify-content: space-between;}</code></pre><h3 id="2-8-点位"><a href="#2-8-点位" class="headerlink" title="2-8 点位"></a>2-8 点位</h3><p><img src="/img/image-20200411181143162.png" srcset="/img/loading.gif" alt="image-20200411181143162"></p><pre><code class="html">&lt;div class=&quot;box two-2-8&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.two-2-8 {    display: flex;    flex-direction: column;    justify-content: space-between;    align-items: center;}</code></pre><h3 id="1-8-点位"><a href="#1-8-点位" class="headerlink" title="1-8 点位"></a>1-8 点位</h3><p><img src="/img/image-20200411181510754.png" srcset="/img/loading.gif" alt="image-20200411181510754"></p><blockquote><p>先在容器里设置两点的 align-items 都为 flex-start</p><p>然后单独给 8 号点位设置 align-self 为 flex-end</p></blockquote><pre><code class="html">&lt;div class=&quot;box two-1-8&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;dotBox two-1-8-item&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.two-1-8 {    display: flex;    align-items: flex-start;}.two-1-8-item {    align-self: flex-end;}</code></pre><h3 id="1-9-点位"><a href="#1-9-点位" class="headerlink" title="1-9 点位"></a>1-9 点位</h3><p><img src="/img/image-20200411182002843.png" srcset="/img/loading.gif" alt="image-20200411182002843"></p><blockquote><p>先在容器里设置两点的 align-items 都为 flex-start 且 justify-content 为 space-between</p><p>然后单独给 8 号点位设置 align-self 为 flex-end</p></blockquote><pre><code class="html">&lt;div class=&quot;box two-1-9&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;dotBox two-1-9-item&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.two-1-9 {    display: flex;    align-items: flex-start;    justify-content: space-between;}.two-1-9-item {    align-self: flex-end;}</code></pre><h2 id="四、四项目"><a href="#四、四项目" class="headerlink" title="四、四项目"></a>四、四项目</h2><h3 id="1-3-5-8-点位"><a href="#1-3-5-8-点位" class="headerlink" title="1-3-5-8 点位"></a>1-3-5-8 点位</h3><p><img src="/img/image-20200411184206435.png" srcset="/img/loading.gif" alt="image-20200411184206435"></p><blockquote><p>中间的单独搭个 flex 容器</p></blockquote><pre><code class="html">&lt;div class=&quot;box four-1-3-5-8&quot;&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;four-1-3-5-8-item&quot;&gt;        &lt;div class=&quot;dotBox&quot;&gt;            &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;        &lt;/div&gt;        &lt;div class=&quot;dotBox&quot;&gt;            &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;        &lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;dotBox&quot;&gt;        &lt;div class=&quot;dot&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.four-1-3-5-8 {    display: flex;    align-items: flex-start;}.four-1-3-5-8-item {    height: 100%;    display: flex;     flex-direction: column-reverse; }</code></pre><h2 style='color:red;'>再增加点数就同理，使用变动主轴方向 flex-direction、主轴方向对其方式 justify-content、交叉轴方向上对其方式 align-items、使项目也是flex容器包裹项目这些方法大致都可以完成</h2><h2 id="五、最后"><a href="#五、最后" class="headerlink" title="五、最后"></a>五、最后</h2><p>交一下骰子六点的作业</p><p><img src="/img/image-20200411195021255.png" srcset="/img/loading.gif" alt="image-20200411200955345"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CSS</tag>
+      
+      <tag>FlexBox</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 CSS 】FlexBox 语法</title>
+    <link href="/2020/04/09/%E3%80%90-CSS-%E3%80%91FlexBox-%E8%AF%AD%E6%B3%95/"/>
+    <url>/2020/04/09/%E3%80%90-CSS-%E3%80%91FlexBox-%E8%AF%AD%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="FlexBox-语法"><a href="#FlexBox-语法" class="headerlink" title="FlexBox 语法"></a>FlexBox 语法</h1><blockquote><p>文章学习于阮一峰老师 <a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="noopener">flex 语法篇</a></p></blockquote><h2 id="一、flex-布局是什么？"><a href="#一、flex-布局是什么？" class="headerlink" title="一、flex 布局是什么？"></a>一、flex 布局是什么？</h2><blockquote><p>Flex 布局是 flexible box 的简称，弹性盒子布局，用来为盒状模型提供最大的灵活性</p></blockquote><p>任何一个容器都可以指定为 Flex 布局</p><pre><code class="css">.box{  display: flex;}</code></pre><p>行内元素也可以使用 Flex 布局</p><pre><code class="css">.box{  display: inline-flex;}</code></pre><p>Webkit 内核的浏览器 ,必须加上<code>-webkit</code>前缀</p><pre><code class="css">.box{  display: -webkit-flex; /* Safari */  display: flex;}</code></pre><p style='color="red"'>注意：</p><p>设为 Flex 布局以后，子元素的<code>float</code>、<code>clear</code>和<code>vertical-align</code>属性将失效</p><h2 id="二、容器的属性"><a href="#二、容器的属性" class="headerlink" title="二、容器的属性"></a>二、容器的属性</h2><blockquote><p>采用flex布局的元素，称之为”flex容器“，这里简称为容器；子元素即容器成员称之为”flex项目“，简称为项目。</p></blockquote><p><img src="/img/image-20200411095239471.png" srcset="/img/loading.gif" alt="image-20200411095239471"></p><p><code>注意</code>：主轴的方向受flex-direction属性影响，不一定是水平方向从左到右（默认如此）</p><p>有六个属性：</p><pre><code class="markdown">flex-direction: 决定容器主轴方向，即项目的排列方向flex-wrap: 决定项目在主轴上排列不下如何换行flex-flow: flex-direction + flex-warp的简写形式justify-content: 项目的主轴上的对齐方式align-items: 项目的交叉轴上对齐方式align-content: 项目为多行时的交叉轴上填充方式</code></pre><h3 id="2-1-flex-direction"><a href="#2-1-flex-direction" class="headerlink" title="2.1 flex-direction"></a>2.1 flex-direction</h3><ul><li>row (默认值)：设置主轴为水平方向，项目从左到右排列</li><li>row-reverse：设置主轴为水平方向，项目从右到左排列</li><li>column：设置主轴为垂直方向，项目从上到下排列</li><li>column-reverse：设置主轴为垂直方向，项目从下到上排列</li></ul><h3 id="2-2-flex-wrap"><a href="#2-2-flex-wrap" class="headerlink" title="2.2 flex-wrap"></a>2.2 flex-wrap</h3><ul><li><p>nowrap（默认值）：不换行，放不下会按比例压缩</p></li><li><p>wrap：换行，换行后接在下方，如下</p><blockquote><p>1 2 3 4</p><p>5 6 7</p></blockquote></li><li><p>wrap-reverse：换行，换行后接在上方，如下</p><blockquote><p>5 6 7</p><p>1 2 3 4</p></blockquote></li></ul><h3 id="2-3-flex-flow"><a href="#2-3-flex-flow" class="headerlink" title="2.3 flex-flow"></a>2.3 flex-flow</h3><p>flex-direction 和 flex-wrap 的结合体，用法如下：</p><pre><code class="css">.box {    flex-flow: row nowrap; // 默认值为 row nowrap}</code></pre><h3 id="2-4-justify-content"><a href="#2-4-justify-content" class="headerlink" title="2.4 justify-content"></a>2.4 justify-content</h3><p>它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右</p><ul><li>flex-start（默认值）：左对齐</li><li>flex-end：右对齐</li><li>center：居中对齐</li><li>space-between：两端对齐，项目之间的间隔相等</li><li>space-around：项目两侧的间隔相等（易得项目之间的间隔是项目和边框的间隔的两倍）</li></ul><h3 id="2-5-align-items"><a href="#2-5-align-items" class="headerlink" title="2.5 align-items"></a>2.5 align-items</h3><p>它可能取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下</p><ul><li>flex-start：上端对齐</li><li>flex-end：下端对齐</li><li>center：居中对齐</li><li>baseline：项目第一行的文字基线对齐</li><li>stretch（默认值）：拉伸（未设置高度的项目将拉伸铺满整个盒子高度），类似于等分了容器</li></ul><h3 id="2-6-align-content"><a href="#2-6-align-content" class="headerlink" title="2.6 align-content"></a>2.6 align-content</h3><p>当项目在容器里为多行的时候，该属性才起作用</p><p>它可能取6个值。具体的分布与交叉轴的方向有关，下面假设交叉轴从上到下</p><ul><li>flex-start：上端对齐</li><li>flex-end：下端对齐</li><li>center：居中对齐</li><li>space-between：两端对齐，项目之间的间隔相等</li><li>space-around：项目两侧的间隔相等（易得项目之间的间隔是项目和边框的间隔的两倍）</li><li>stretch（默认值）：拉伸，类似于每一行等分了容器</li></ul><h2 id="三、项目属性"><a href="#三、项目属性" class="headerlink" title="三、项目属性"></a>三、项目属性</h2><p>项目属性有六个，分别是</p><ul><li><p><code>order</code>：设置排序权重，默认为0，越小越靠前，相等权重按文档顺序</p></li><li><p><code>flex-grow</code>：拓展权重，默认值为0，如果在主轴上有剩余空间，则按照设置的权重比例追加宽度</p><blockquote><p>例如：容器宽度500，项目1宽度100，项目2宽度200，则剩余空间300，如项目1、2的权重比为1:2，则项目1宽度拓展为100+100=200，项目2宽度拓展为200+200=400）</p></blockquote></li><li><p><code>flex-shrink</code>：缩小权重，默认值为1，当空间不足时会按权重比例缩小</p><blockquote><p>例如：容器宽度600，项目1宽度500，项目2宽度1000，明显空间不足，如项目1、2的权重比为2:1，则：</p><p>应当缩小的总空间为 (500+1000)-600=900</p><p>加权和为：500*2+1000*1=2000</p><p>项目应当缩小的宽度为：[应当缩小的总空间]*([缩小权重 flex-shrink]*[项目自身宽度]/[加权和])</p><p>项目1的宽度缩小为：500-[900*(2*500/2000)]=500-450=50</p><p>项目2的宽度缩小为：1000-[900*(1*1000/2000)]=1000-450=550</p></blockquote></li><li><p><code>flex-basis</code>：项目基础空间，默认值auto，定义了项目占主轴的空间（拓展或缩小前的基础空间）</p></li><li><p><code>flex</code>：flex-grow、flex-shrink、flex-basis 三者的简写，默认值为 0 1 auto</p></li><li><p><code>align-self</code>：项目自己的对齐方式，默认值auto</p><blockquote><p>设置为auto时和容器的align-items的设置一样（继承），除了auto，可设置的属性值和align-items一样，flex-start | flex-end | center | baseline | stretch，效果也是</p></blockquote></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CSS</tag>
+      
+      <tag>FlexBox</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 CSS 】品字布局</title>
+    <link href="/2020/04/09/%E3%80%90-CSS-%E3%80%91%E5%93%81%E5%AD%97%E5%B8%83%E5%B1%80/"/>
+    <url>/2020/04/09/%E3%80%90-CSS-%E3%80%91%E5%93%81%E5%AD%97%E5%B8%83%E5%B1%80/</url>
+    
+    <content type="html"><![CDATA[<h1 id="品字布局"><a href="#品字布局" class="headerlink" title="品字布局"></a>品字布局</h1><blockquote><p>html</p></blockquote><pre><code class="html">&lt;div class=&#39;div1&#39;&gt;&lt;/div&gt;&lt;div class=&#39;div2&#39;&gt;&lt;/div&gt;&lt;div class=&#39;div3&#39;&gt;&lt;/div&gt;</code></pre><blockquote><p>css</p></blockquote><pre><code class="css">.div1, .div2, .div3 {    height: 100px;}.div1 {    width: 100%;    margin: 0 auto;    background-color: blue;}.div2 {    width: 50%;    float: left;    background-color: red;}.div3 {    width: 50%;    float: left;    background-color: yellow;}</code></pre><p>效果：</p><p><img src="/img/image-20200409120750440.png" srcset="/img/loading.gif" alt="image-20200409120750440"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CSS</tag>
+      
+      <tag>布局</tag>
+      
+      <tag>品字布局</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 HTML 】meta标签属性</title>
+    <link href="/2020/04/09/%E3%80%90-HTML-%E3%80%91meta%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7/"/>
+    <url>/2020/04/09/%E3%80%90-HTML-%E3%80%91meta%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7/</url>
+    
+    <content type="html"><![CDATA[<h1 id="meta标签属性"><a href="#meta标签属性" class="headerlink" title="meta标签属性"></a>meta标签属性</h1><blockquote><p>简介: 常用于定义页面的说明，关键字，最后修改日期，和其它的元数据。这些元数据将服务于浏览器（如何布局或重载页面），搜索引擎和其它网络服务。</p></blockquote><h2 id="1、charset属性"><a href="#1、charset属性" class="headerlink" title="1、charset属性"></a>1、charset属性</h2><pre><code class="html">&lt;!-- 定义网页文档的字符集 --&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;</code></pre><h2 id="2、name-content属性"><a href="#2、name-content属性" class="headerlink" title="2、name + content属性"></a>2、name + content属性</h2><blockquote><p>网页作者、网页地址、网页版权信息、网页关键字、网页描述、搜索引擎索引方式、移动端常用视口设置</p></blockquote><pre><code class="html">&lt;!-- 网页作者 --&gt;&lt;meta name=&quot;author&quot; content=&quot;开源技术团队&quot;/&gt;&lt;!-- 网页地址 --&gt;&lt;meta name=&quot;website&quot; content=&quot;https://sanyuan0704.github.io/frontend_daily_question/&quot;/&gt;&lt;!-- 网页版权信息 --&gt; &lt;meta name=&quot;copyright&quot; content=&quot;2018-2019 demo.com&quot;/&gt;&lt;!-- 网页关键字, 用于SEO --&gt;&lt;meta name=&quot;keywords&quot; content=&quot;meta,html&quot;/&gt;&lt;!-- 网页描述 --&gt;&lt;meta name=&quot;description&quot; content=&quot;网页描述&quot;/&gt;&lt;!-- 搜索引擎索引方式，一般为all，不用深究 --&gt;&lt;meta name=&quot;robots&quot; content=&quot;all&quot; /&gt;&lt;!-- 移动端常用视口设置 --&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no&quot;/&gt;&lt;!--   viewport参数详解：  width：宽度（数值 / device-width）（默认为980 像素）  height：高度（数值 / device-height）  initial-scale：初始的缩放比例 （范围从&gt;0 到10）  minimum-scale：允许用户缩放到的最小比例  maximum-scale：允许用户缩放到的最大比例  user-scalable：用户是否可以手动缩 (no,yes) --&gt;</code></pre><h2 id="3、http-equiv属性"><a href="#3、http-equiv属性" class="headerlink" title="3、http-equiv属性"></a>3、http-equiv属性</h2><blockquote><p>网页的过期时间 、计时刷新或跳转、禁止浏览器缓存、浏览器版本、隐藏状态栏/设置状态栏颜色</p></blockquote><pre><code class="html">&lt;!-- expires指定网页的过期时间。一旦网页过期，必须从服务器上下载。 --&gt;&lt;meta http-equiv=&quot;expires&quot; content=&quot;Fri, 12 Jan 2020 18:18:18 GMT&quot;/&gt;&lt;!-- 等待一定的时间刷新或跳转到其他url。下面1表示1秒 --&gt;&lt;meta http-equiv=&quot;refresh&quot; content=&quot;1; url=https://www.baidu.com&quot;/&gt;&lt;!-- 禁止浏览器从本地缓存中读取网页，即浏览器一旦离开网页在无法连接网络的情况下就无法访问到页面。 --&gt;&lt;meta http-equiv=&quot;pragma&quot; content=&quot;no-cache&quot;/&gt;&lt;!-- 也是设置cookie的一种方式，并且可以指定过期时间 --&gt;&lt;meta http-equiv=&quot;set-cookie&quot; content=&quot;name=value expires=Fri, 12 Jan 2001 18:18:18 GMT,path=/&quot;/&gt;&lt;!-- 使用浏览器版本 --&gt;&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot; /&gt;&lt;!-- 针对WebApp全屏模式，隐藏状态栏/设置状态栏颜色，content的值为default | black | black-translucent --&gt;&lt;meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;black-translucent&quot; /&gt;</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>HTML</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>HTML</tag>
+      
+      <tag>meta</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 HTML 】async 和 defer 的区别</title>
+    <link href="/2020/04/09/%E3%80%90-HTML-%E3%80%91async-%E5%92%8C-defer-%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <url>/2020/04/09/%E3%80%90-HTML-%E3%80%91async-%E5%92%8C-defer-%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    
+    <content type="html"><![CDATA[<h1 id="script-标签中-defer-和-async-的区别"><a href="#script-标签中-defer-和-async-的区别" class="headerlink" title="script 标签中 defer 和 async 的区别"></a>script 标签中 defer 和 async 的区别</h1><blockquote><p><strong>默认情况下，脚本的下载和执行会根据文档的先后顺序同步进行，当脚本下载和执行时，文档解析就会被阻塞，在脚本下载或执行结束后才会继续往下解析。</strong></p></blockquote><h2 id="1、defer-属性"><a href="#1、defer-属性" class="headerlink" title="1、defer 属性"></a>1、defer 属性</h2><p>当Script中有defer属性时，文档解析和脚本加载是异步的，等文档解析完脚本才开始执行。</p><h2 id="2、async-属性"><a href="#2、async-属性" class="headerlink" title="2、async 属性"></a>2、async 属性</h2><p>当Script中有async 属性时，文档解析和脚本加载也是异步的，脚本下载完成后会停止HTML解析，执行脚本，脚本解析完继续HTML解析。</p><h2 id="3、当-defer-和-async-同时存在时"><a href="#3、当-defer-和-async-同时存在时" class="headerlink" title="3、当 defer 和 async 同时存在时"></a>3、当 defer 和 async 同时存在时</h2><p>执行效果和 async 一致</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>HTML</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>HTML</tag>
+      
+      <tag>script</tag>
+      
+      <tag>async</tag>
+      
+      <tag>defer</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 Vue 】v-slot 插槽</title>
+    <link href="/2020/04/08/%E3%80%90-Vue-%E3%80%91v-slot-%E6%8F%92%E6%A7%BD/"/>
+    <url>/2020/04/08/%E3%80%90-Vue-%E3%80%91v-slot-%E6%8F%92%E6%A7%BD/</url>
+    
+    <content type="html"><![CDATA[<h1 id="v-slot-插槽"><a href="#v-slot-插槽" class="headerlink" title="v-slot 插槽"></a>v-slot 插槽</h1><blockquote><p>v-slot</p><p><strong>缩写</strong>：<code>#</code></p><p><strong>参数</strong>：插槽名 (可选，默认值是 <code>default</code>)</p></blockquote><h2 id="一、具名插槽"><a href="#一、具名插槽" class="headerlink" title="一、具名插槽"></a>一、具名插槽</h2><blockquote><p>子组件<base-layout>模板</p></blockquote><pre><code class="html">&lt;div class=&quot;container&quot;&gt;  &lt;header&gt;    &lt;!-- header 是插槽名，是v-slot后面的名称，没写的默认default --&gt;    &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;  &lt;/header&gt;  &lt;main&gt;    &lt;slot&gt;&lt;/slot&gt;  &lt;/main&gt;  &lt;footer&gt;    &lt;slot name=&quot;footer&quot;&gt;&lt;/slot&gt;  &lt;/footer&gt;&lt;/div&gt;</code></pre><p>一个不带 <code>name</code> 的 <code>&lt;slot&gt;</code> 出口会带有隐含的名字“default”。</p><blockquote><p>使用模板</p></blockquote><pre><code class="html">&lt;base-layout&gt;  &lt;template v-slot:header&gt;    &lt;h1&gt;这是一个插入的头模板&lt;/h1&gt;  &lt;/template&gt;  &lt;p&gt;这是default插入的模板&lt;/p&gt;  &lt;template v-slot:footer&gt;    &lt;h2&gt;这是一个插入的尾模板&lt;/h2&gt;  &lt;/template&gt;&lt;/base-layout&gt;</code></pre><p>效果：</p><p><img src="/img/image-20200408113819947.png" srcset="/img/loading.gif" alt="image-20200408113819947"></p><h2 id="二、作用域插槽"><a href="#二、作用域插槽" class="headerlink" title="二、作用域插槽"></a>二、作用域插槽</h2><p>有时让插槽内容能够访问子组件中才有的数据是很有用的。例如，设想一个带有如下模板的 <code>&lt;current-user&gt;</code> 组件</p><pre><code class="html">&lt;span&gt;  &lt;slot&gt;{{ user.lastName }}&lt;/slot&gt;&lt;/span&gt;</code></pre><p>我们可能想换掉备用内容，用名而非姓来显示。如下：</p><pre><code class="html">&lt;current-user&gt;  {{ user.firstName }}&lt;/current-user&gt;</code></pre><p>然而上述代码不会正常工作，因为只有 <code>&lt;current-user&gt;</code> 组件可以访问到 <code>user</code> 而我们提供的内容是在父级渲染的，在父级组件上使用user是访问不到数据的。</p><p>为了让 <code>user</code> 在父级的插槽内容中可用，我们可以将 <code>user</code> 作为 <code>&lt;slot&gt;</code> 元素的一个属性绑定上去：</p><pre><code class="html">&lt;span&gt;  &lt;slot :user=&quot;user&quot;&gt;    {{ user.lastName }}  &lt;/slot&gt;&lt;/span&gt;</code></pre><pre><code class="html">&lt;current-user&gt;  &lt;!-- slotProps 这个名字可以改成你喜欢的 --&gt;  &lt;template #default=&quot;slotProps&quot;&gt;    {{ slotProps.user.firstName }}  &lt;/template&gt;&lt;/current-user&gt;</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>Vue</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Vue</tag>
+      
+      <tag>组件</tag>
+      
+      <tag>插槽</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 Vue 】非父子组件通讯总线机制</title>
+    <link href="/2020/04/07/%E3%80%90-Vue-%E3%80%91%E9%9D%9E%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/"/>
+    <url>/2020/04/07/%E3%80%90-Vue-%E3%80%91%E9%9D%9E%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/</url>
+    
+    <content type="html"><![CDATA[<h1 id="非父子组件通讯（bus-总线机制、订阅者模式）"><a href="#非父子组件通讯（bus-总线机制、订阅者模式）" class="headerlink" title="非父子组件通讯（bus 总线机制、订阅者模式）"></a>非父子组件通讯（bus 总线机制、订阅者模式）</h1><blockquote><p>父子组件之间通讯可以通过 props 、$emit 事件来进行数据交互，但是非父子组件之间也这样一层层的传递过去就比较复杂了，我们可以将 prototype 的 bus 挂载在 Vue 实例中来实现</p></blockquote><h2 id="一、直接使用方法"><a href="#一、直接使用方法" class="headerlink" title="一、直接使用方法"></a>一、直接使用方法</h2><h3 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h3><p>将 prototype 的 bus 挂载在 Vue实例上<br>以后创建Vue实例都会有bus属性且该属性是个Vue对象<br>所以组件的 this.bus 就都可以使用 this.$emit 和 this.$on 方法来进行监听</p><p><code>Vue.prototype.bus = new Vue();</code></p><p>子组件1发布自定义事件并携带参数</p><pre><code class="js">handleClik() {    this.bus.$emit(&quot;eventName&quot;, params1, params2, ……);},</code></pre><p>子组件2通过$on监听自定义事件</p><p style='color="red"'>注意</p>当组件注销后要销毁监听器，否则会多次挂载，造成触发一次但多个响应的情况<pre><code class="js">// mounted 或者 createdmounted() {    // 在加载的时候监听自定义事件    this.bus.$on(&#39;eventName&#39;, (...params) =&gt; {        ……    })},beforeDestroy() {    this.bus.$off(&quot;eventName&quot;);}</code></pre><h3 id="2、实例"><a href="#2、实例" class="headerlink" title="2、实例"></a>2、实例</h3><pre><code class="html">&lt;div id=&quot;app&quot;&gt;    &lt;child :count=&#39;1&#39;&gt;&lt;/child&gt;    &lt;brother&gt;&lt;/brother&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt;    /**      * 将 prototype 的 bus 挂载在 Vue实例上      * 以后创建Vue实例都会有bus属性且该属性是个Vue对象      * 所以组件的 this.bus 就都可以使用 this.$emit 和 this.$on 方法来进行监听      * */    Vue.prototype.bus = new Vue();    /**      *  定义全局组件      *  child 组件向 brother 组件通过总线传值      *  通过 +1 按钮改变值用来测试      * */    Vue.component(&quot;child&quot;, {        template: `&lt;div&gt;子组件的值为 {{ number }}                &lt;button @click=&quot;add&quot;&gt; +1 &lt;/button&gt;                &lt;button @click=&quot;handleClik&quot;&gt;通过总线传值&lt;/button&gt;                &lt;/div&gt;`,        props: [            &#39;count&#39;,        ],        data() {            return {                number: this.count,            }        },        methods: {            handleClik() {                // 向 this.bus 通过 $emit 传递                this.bus.$emit(&quot;addNumber&quot;, this.number);            },            add() {                this.number ++;            },        }    });    Vue.component(&quot;brother&quot;, {        template: &#39;&lt;div&gt;在总线上接收到的值：{{ value }}&lt;/div&gt;&#39;,        data() {            return {                value: 0            }        },        mounted() {            let self = this;            // 在加载的时候监听自定义事件            this.bus.$on(&#39;addNumber&#39;, (number) =&gt; {                self.value = number;            })        },        // 记得销毁监听器        beforeDestroy() {            this.bus.$off(&quot;addNumber&quot;);        }    })    var vm = new Vue({        el: &#39;#app&#39;,    });&lt;/script&gt;</code></pre><h2 id="二、在-vue-cli-搭建的项目中使用"><a href="#二、在-vue-cli-搭建的项目中使用" class="headerlink" title="二、在 vue-cli 搭建的项目中使用"></a>二、在 vue-cli 搭建的项目中使用</h2><h3 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h3><blockquote><p>在 main.js 文件里写上下方语句，挂载 bus 到 Vue实例上</p></blockquote><pre><code class="js">Vue.prototype.bus = new Vue();</code></pre><h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><blockquote><p>组件A 向总线 bus 发布自定义事件</p></blockquote><pre><code class="html">&lt;template&gt;  &lt;div class=&quot;componentA&quot;&gt;    组件A 的值为 {{ number }}    &lt;button @click=&quot;getValue&quot;&gt; 传值 &lt;/button&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;export default {  name: &#39;ComponentA&#39;,  props: [    &#39;count&#39;,  ],  data () {    return {      number: this.count,    }  },  methods: {    getValue() {      this.bus.$emit(&quot;changeNumber&quot;, this.number);    }  }}&lt;/script&gt;</code></pre><h3 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h3><blockquote><p>组件B 监控自定义事件，记得注销组件的时候销毁监控器</p></blockquote><pre><code class="html">&lt;template&gt;    &lt;div class=&quot;componentB&quot;&gt;        接收到的值为：{{ value }}    &lt;/div&gt;&lt;/template&gt;&lt;script&gt;    export default {        name: &#39;ComponentB&#39;,        data() {            return {                value: 0,            }        },        mounted() {            let self = this;            this.bus.$on(&quot;changeNumber&quot;, (number) =&gt; {                self.value = number;            })        },        beforeDestroy() {            this.bus.$off(&quot;changeNumber&quot;);        }    }&lt;/script&gt;</code></pre><h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><blockquote><p>使用</p></blockquote><pre><code class="html">&lt;template&gt;  &lt;div id=&quot;app&quot;&gt;    &lt;component-a :count=&#39;10&#39;&gt;&lt;/component-a&gt;    &lt;component-b&gt;&lt;/component-b&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;  import ComponentA from &#39;./components/ComponentA&#39;  import ComponentB from &#39;./components/ComponentB&#39;  export default {    name: &#39;App&#39;,    components: {      ComponentA,      ComponentB,    }  }&lt;/script&gt;</code></pre><h2 id="提醒"><a href="#提醒" class="headerlink" title="提醒"></a>提醒</h2><p>总线机制适用于在项目不大，使用 vuex 略显麻烦的时候；如果是较为复杂的项目还是使用和vue配套的vuex比较合适。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Vue</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Vue</tag>
+      
+      <tag>组件</tag>
+      
+      <tag>数据传递</tag>
+      
+      <tag>非父子组件</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 Vue 】动态组件解决bug</title>
+    <link href="/2020/04/07/%E3%80%90-Vue-%E3%80%91%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6%E8%A7%A3%E5%86%B3bug/"/>
+    <url>/2020/04/07/%E3%80%90-Vue-%E3%80%91%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6%E8%A7%A3%E5%86%B3bug/</url>
+    
+    <content type="html"><![CDATA[<h1 id="动态组件解决bug"><a href="#动态组件解决bug" class="headerlink" title="动态组件解决bug"></a>动态组件解决bug</h1><h2 id="一、遇到了什么问题？"><a href="#一、遇到了什么问题？" class="headerlink" title="一、遇到了什么问题？"></a>一、遇到了什么问题？</h2><p>举个栗子：</p><pre><code class="html">&lt;div id=&quot;app&quot;&gt;    &lt;table&gt;        &lt;tbody&gt;            &lt;row&gt;&lt;/row&gt;            &lt;row&gt;&lt;/row&gt;            &lt;row&gt;&lt;/row&gt;            &lt;row&gt;&lt;/row&gt;        &lt;/tbody&gt;    &lt;/table&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt;    var row = {        template: &#39;&lt;tr&gt;&lt;td&gt;Hello World&lt;/td&gt;&lt;/tr&gt;&#39;,    };    var vm = new Vue({        el: &#39;#app&#39;,        components: {            row,        },    });&lt;/script&gt;</code></pre><p>看上去没什么问题：</p><p><img src="/img/image-20200407103949346.png" srcset="/img/loading.gif" alt="image-20200407103949346"></p><p>但是打开控制台我们就能看到：</p><p><img src="/img/image-20200407104040103.png" srcset="/img/loading.gif" alt="image-20200407104040103"></p><p>发现子组件没有被包在<tbody>里面，这是因为根据html的规则tbody里面是放<row>他识别不出来，不是他熟悉的<tr>，所以会出现这种情况，解决方案就是设置动态组件</p><pre><code class="html">&lt;div id=&quot;app&quot;&gt;    &lt;table&gt;        &lt;tbody&gt;            &lt;tr is=&quot;row&quot;&gt;&lt;/tr&gt;            &lt;tr is=&quot;row&quot;&gt;&lt;/tr&gt;            &lt;tr is=&quot;row&quot;&gt;&lt;/tr&gt;            &lt;tr is=&quot;row&quot;&gt;&lt;/tr&gt;        &lt;/tbody&gt;    &lt;/table&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt;    var row = {        template: &#39;&lt;tr&gt;&lt;td&gt;Hello World&lt;/td&gt;&lt;/tr&gt;&#39;,    };    var vm = new Vue({        el: &#39;#app&#39;,        components: {            row,        },    });&lt;/script&gt;</code></pre><p>通过 is 设置动态组件就行了</p><p><img src="/img/image-20200407104726810.png" srcset="/img/loading.gif" alt="image-20200407104726810"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Vue</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Vue</tag>
+      
+      <tag>组件</tag>
+      
+      <tag>动态组件</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 Vue 】父子组件之间数据传递</title>
+    <link href="/2020/04/07/%E3%80%90-Vue-%E3%80%91%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92/"/>
+    <url>/2020/04/07/%E3%80%90-Vue-%E3%80%91%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92/</url>
+    
+    <content type="html"><![CDATA[<h1 id="父子组件之间数据传递"><a href="#父子组件之间数据传递" class="headerlink" title="父子组件之间数据传递"></a>父子组件之间数据传递</h1><h2 id="一、父组件向子组件传递数据"><a href="#一、父组件向子组件传递数据" class="headerlink" title="一、父组件向子组件传递数据"></a>一、父组件向子组件传递数据</h2><pre><code class="html">&lt;div id=&quot;app&quot;&gt;    &lt;counter :number=&#39;count&#39;&gt;&lt;/counter&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt;    // 子组件    var counter = {        template: &#39;&lt;div&gt;{{ number }}&lt;/div&gt;&#39;,        // 使用 props 接收父组件传过来的参数        props: [            &#39;number&#39;        ]    };    var vm = new Vue({        el: &#39;#app&#39;,        components: {            counter,        },        data() {            return {                count: 0            }        }    })&lt;/script&gt;</code></pre><p><strong><p style="color: red;">注意：</p></strong></p><blockquote><p>在 Vue 里存在一个叫做单向数据流的概念，也就是父组件可以随意的向子组件传递参数，子组件接收到父组件的参数后，只能使用，不能做修改，因为父组件传过来的可能是引用型数据，子组件乱改的话很可能影响其他组件使用这个数据。例如：</p></blockquote><pre><code class="html">var counter = {    template: &#39;&lt;div @click=&quot;handleClick&quot;&gt;{{ number }}&lt;/div&gt;&#39;,    props: [        &#39;number&#39;    ],    methods: {        handleClick() {            this.number ++;        }    }};</code></pre><p>这里子组件把父组件传过来的number参数做了加一修改，运行看似是有效果的，点击数字可以实现加一，但是打开控制台就可以看到有报错。</p><p>解决方法——子组件 clone 一份数据，对自己的数据进行修改就可以了</p><pre><code class="html">var counter = {    template: &#39;&lt;div @click=&quot;handleClick&quot;&gt;{{ count }}&lt;/div&gt;&#39;,    props: [        &#39;number&#39;    ],    data() {        return {            count: this.number        }    },    methods: {        handleClick() {            this.count ++;        }    }};</code></pre><h2 id="二、子组件数据变更后向父组件传递数据"><a href="#二、子组件数据变更后向父组件传递数据" class="headerlink" title="二、子组件数据变更后向父组件传递数据"></a>二、子组件数据变更后向父组件传递数据</h2><blockquote><p>子组件向父组件传值我们用事件来实现，子组件通过 this.$emit 向外触发事件，实现传递数据</p></blockquote><pre><code class="html">&lt;div id=&quot;app&quot;&gt;    &lt;!-- 这里的 @numberInc 对应子组件里 $emit 里设置的事件名称 --&gt;    &lt;counter :number=&#39;count&#39; @number-inc=&#39;changeNumber&#39;&gt;&lt;/counter&gt;    父组件的 count 值： {{ count }}&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt;    var counter = {        template: &#39;&lt;div @click=&quot;handleClick&quot;&gt;{{ count }}&lt;/div&gt;&#39;,        props: [            &#39;number&#39;        ],        data() {            return {                count: this.number            }        },        methods: {            handleClick() {                this.count ++;                /*                * numberInc 事件名可以随意修改(自定义)但是不要用大写                * 因为在这里大小写不敏感，后面的参数个数也可以添加多个                */                this.$emit(&quot;number-inc&quot;, this.count);            }        }    };    var vm = new Vue({        el: &#39;#app&#39;,        components: {            counter,        },        data() {            return {                count: 0            }        },        methods: {            // 这里的参数名 counter 也是随便设的            changeNumber(counter) {                this.count = counter;            }        }    })&lt;/script&gt;</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>Vue</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Vue</tag>
+      
+      <tag>组件</tag>
+      
+      <tag>数据传递</tag>
+      
+      <tag>父子组件</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 CSS 】浮动和清除浮动</title>
+    <link href="/2020/04/06/%E3%80%90-CSS-%E3%80%91%E6%B5%AE%E5%8A%A8%E5%92%8C%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/"/>
+    <url>/2020/04/06/%E3%80%90-CSS-%E3%80%91%E6%B5%AE%E5%8A%A8%E5%92%8C%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/</url>
+    
+    <content type="html"><![CDATA[<h1 id="浮动和清除浮动"><a href="#浮动和清除浮动" class="headerlink" title="浮动和清除浮动"></a>浮动和清除浮动</h1><blockquote><p><strong>浮动的框可以向左或向右移动，直到它的外边缘碰到包含框或另一个浮动框的边框为止。</strong></p><p><strong>由于浮动框不在文档的普通流中，所以文档的普通流中的块框表现得就像浮动框不存在一样。</strong></p><p>——文章参考w3school</p></blockquote><p><a href="https://www.w3school.com.cn/css/css_positioning_floating.asp" target="_blank" rel="noopener">浮动性质参考w3school</a></p><h2 id="1、探讨为什么要清除浮动？"><a href="#1、探讨为什么要清除浮动？" class="headerlink" title="1、探讨为什么要清除浮动？"></a>1、探讨为什么要清除浮动？</h2><blockquote><p>清除浮动不是取消浮动框的浮动状态，而是因为浮动元素脱离文档流导致的高度塌陷等问题需要清楚浮动来解决，看下面的例子</p></blockquote><ul><li><p>例子中的 html </p><pre><code class="html">  &lt;div class=&quot;out&quot;&gt;      &lt;div class=&quot;float&quot;&gt;&lt;/div&gt;  &lt;/div&gt;</code></pre></li><li><p>先看个不浮动的情况</p><pre><code class="css">  .out {      width: 400px;      background-color: silver;  }  .float {      width: 100px;      height: 200px;      background-color: red;  }</code></pre><p>  <img src="/img/image-20200406104548783.png" srcset="/img/loading.gif" alt="不浮动"></p></li><li><p>当子盒子浮动的时候出现的情况</p><pre><code class="css">  .out {      width: 400px;      background-color: silver;  }  .float {      float: right;      width: 100px;      height: 200px;      background-color: red;  }</code></pre><p>  <img src="/img/image-20200406104935469.png" srcset="/img/loading.gif" alt="浮动后"></p><blockquote><p>我们会发现当父盒子未设置高度控制，需要靠子盒子撑起高度，即随内容的高度增加而增加的，这种情况下，如果所有子盒子都是浮动的，就会出现父盒子高度塌陷，就像上图；或者浮动的盒子的高度比正常文档流盒子撑起的父盒子高度都高的情况下，浮动盒子就会溢出父盒子之外，清除浮动就是要解决这类情况。</p></blockquote></li></ul><h2 id="2、如何清除浮动？"><a href="#2、如何清除浮动？" class="headerlink" title="2、如何清除浮动？"></a>2、如何清除浮动？</h2><h3 id="方法1：添加标签"><a href="#方法1：添加标签" class="headerlink" title="方法1：添加标签"></a>方法1：添加标签</h3><pre><code class="html">&lt;div class=&quot;out&quot;&gt;    &lt;div class=&quot;float&quot;&gt;&lt;/div&gt;    &lt;!-- 新增 clear 这个标签在下方 --&gt;    &lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.out {    width: 400px;    background-color: silver;}.float {    float: right;    width: 100px;    height: 200px;    background-color: red;}.clear {    clear: both; // 核心代码}</code></pre><p>效果：</p><p><img src="/img/image-20200406110254012.png" srcset="/img/loading.gif" alt="清除浮动后"></p><blockquote><p>知识点补充：</p><p>clear 属性：有四个可设置的值——&gt; left、right、both、none</p><p>分别表示清除左边、右边、所有、不清除四种情况，元素设置该属性后相当于，虽然浮动元素不在文档流里了，但是设置了该属性就依然当他们存在，想念他们，给他们留空间。</p></blockquote><h3 id="方法2：父级添加overflow属性，或者设置高度"><a href="#方法2：父级添加overflow属性，或者设置高度" class="headerlink" title="方法2：父级添加overflow属性，或者设置高度"></a>方法2：父级添加overflow属性，或者设置高度</h3><pre><code class="html">&lt;div class=&quot;out&quot;&gt;    &lt;div class=&quot;float&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.out {    width: 400px;    overflow: hidden; // 核心代码 设置为 auto 也行    background-color: silver;}.float {    float: right;    width: 100px;    height: 200px;    background-color: red;}</code></pre><p>效果：</p><p><img src="/img/image-20200406110254012.png" srcset="/img/loading.gif" alt="清除浮动后"></p><h3 id="方法3：建立伪类选择器清除浮动【推荐】"><a href="#方法3：建立伪类选择器清除浮动【推荐】" class="headerlink" title="方法3：建立伪类选择器清除浮动【推荐】"></a>方法3：建立伪类选择器清除浮动【推荐】</h3><pre><code class="html">&lt;div class=&quot;out&quot;&gt;    &lt;div class=&quot;float&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre><pre><code class="css">.out {    width: 400px;    background-color: silver;}.float {    float: right;    width: 100px;    height: 200px;    background-color: red;}.out::after {    /* 设置添加子元素的内容是空 */    content: &#39;&#39;;      /* 设置添加子元素为块级元素 */    display: block;    /* 设置添加的子元素的高度0 */    height: 0;    /* 设置添加子元素看不见 */    visibility: hidden;    /* 设置clear：both */    clear: both;}</code></pre><p>效果：</p><p><img src="/img/image-20200406110254012.png" srcset="/img/loading.gif" alt="清除浮动后"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CSS</tag>
+      
+      <tag>float</tag>
+      
+      <tag>浮动</tag>
+      
+      <tag>清除浮动</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 Git 】Git 链接 Github远程库</title>
+    <link href="/2020/04/05/Git-%E9%93%BE%E6%8E%A5-Github%E8%BF%9C%E7%A8%8B%E5%BA%93/"/>
+    <url>/2020/04/05/Git-%E9%93%BE%E6%8E%A5-Github%E8%BF%9C%E7%A8%8B%E5%BA%93/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Git-链接-Github远程库"><a href="#Git-链接-Github远程库" class="headerlink" title="Git 链接 Github远程库"></a>Git 链接 Github远程库</h1><h2 id="1-创建SSH-Key。"><a href="#1-创建SSH-Key。" class="headerlink" title="1.创建SSH Key。"></a>1.创建SSH Key。</h2><p>在用户主目录（C:\Users\Administrator）下，看看有没有.ssh文件，如果有，再看文件下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接到下一步。如果没有，打开Git Bash，输入命令，创建SSH Key</p><p><code>ssh-keygen -t rsa -C &quot;123@126.com&quot; //123 是你自己注册GitHub的邮箱</code></p><p>（注：id_rsa.pub是公钥，可以公开，id_rsa是私钥，不要公开）</p><h2 id="2-本地创建git版本管理仓库"><a href="#2-本地创建git版本管理仓库" class="headerlink" title="2.本地创建git版本管理仓库"></a>2.本地创建git版本管理仓库</h2><p><code>git init</code></p><h2 id="3-github创建repository仓库"><a href="#3-github创建repository仓库" class="headerlink" title="3.github创建repository仓库"></a>3.github创建repository仓库</h2><p>下一步</p><h2 id="4-链接git与github"><a href="#4-链接git与github" class="headerlink" title="4.链接git与github"></a>4.链接git与github</h2><p>创建新的GitHub仓库后</p><p><strong>在你的本地git版本仓库下打开Git Bash，输入以下指令链接Git与Github仓库</strong></p><p><code>git remote add origin git@github.com:jxhud/exercise.git</code></p><p>上面的<code>git@github.com:jxhud/exercise.git</code>是我的GitHub远程仓库，你自行替换成你的就行</p><h2 id="5-Git推送到GitHub"><a href="#5-Git推送到GitHub" class="headerlink" title="5.Git推送到GitHub"></a>5.Git推送到GitHub</h2><p><code>git push -u origin master</code> </p><p>关联后,第一次因为master分支是空的，加上了-u，推送master分支的所有内容命令</p><p>此后，每次本地提交后，就可以使用命令<code>git push origin master</code>推送最新修改</p><p>推送到其他分支也可以把master替换成其他就行。</p><p><strong>注意</strong> ：推送前Git的仓库里必须要有版本快照，不能为空，所以要先创建提交，如果Git仓库里本来就有快照，就可以直接推送</p><p><strong>注意</strong>：如果出现这种情况：</p><pre><code class="java">error: failed to push some refs to &#39;git@github.com:jxhud/exercise.git&#39;</code></pre><p>那么就是你本地的文件和GitHub上的不一致，要使用命令</p><p><code>git pull origin master</code></p><p>把远程仓库的文件下载下来与你的工作目录合并，再推送</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>git</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>github</tag>
+      
+      <tag>git</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 Git 】Git使用手册</title>
+    <link href="/2020/04/05/Git%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"/>
+    <url>/2020/04/05/Git%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Git使用"><a href="#Git使用" class="headerlink" title="Git使用"></a>Git使用</h1><h2 id="一、下载安装git"><a href="#一、下载安装git" class="headerlink" title="一、下载安装git"></a>一、下载安装git</h2><blockquote><p>自行百度下载安装！！！</p></blockquote><h2 id="二、初次使用配置"><a href="#二、初次使用配置" class="headerlink" title="二、初次使用配置"></a>二、初次使用配置</h2><blockquote><p>在git cmd中依次输入如下命令：</p><p><code>git config --glabal user.name &quot;你的用户名（不要中文）&quot;</code></p><p><code>git config --glabal user.email &quot;你的邮箱&quot;</code></p></blockquote><h2 id="三、简单命令"><a href="#三、简单命令" class="headerlink" title="三、简单命令"></a>三、简单命令</h2><h3 id="（一）两步将工作目录里的文件放到Git仓库"><a href="#（一）两步将工作目录里的文件放到Git仓库" class="headerlink" title="（一）两步将工作目录里的文件放到Git仓库"></a>（一）两步将工作目录里的文件放到Git仓库</h3><ol><li><p><code>git add 文件名</code></p></li><li><p><code>git commit -m &quot;你对这次提交的备注，方便查看&quot;</code></p><h3 id="（二）查看git里的文件状态"><a href="#（二）查看git里的文件状态" class="headerlink" title="（二）查看git里的文件状态"></a>（二）查看git里的文件状态</h3><p> <code>git status</code></p><h3 id="（三）查看提交日志"><a href="#（三）查看提交日志" class="headerlink" title="（三）查看提交日志"></a>（三）查看提交日志</h3><p> <code>git log</code>：基本形式</p></li></ol><p>​    <code>git log --oneline</code>：把每一个提交压缩到了一行中。它默认只显示提交ID和提交信息的第一行</p><p>​    <code>git log --decorate</code>：很多时候，知道每个提交关联的分支或者标签很有用。–decorate标记让git log显示指向这个提交的所有引用（比如说分支、标签等）。</p><p>​    <code>git log --graph</code>：绘制一个ASCII图像来展示提交历史的分支结构。它经常和–oneline和–decorate两个选项一起使用，这样会更容易查看哪个提交属于哪个</p><p>​    <code>git reflog</code> ：查看所有历史提交</p><h3 id="（四）reset和checkout"><a href="#（四）reset和checkout" class="headerlink" title="（四）reset和checkout"></a>（四）reset和checkout</h3><p> <strong>注意：这个命令没那么简单！仔细品味</strong></p><h4 id="1）reset"><a href="#1）reset" class="headerlink" title="1）reset"></a>1）<strong>reset</strong></h4><blockquote><p>三种操作：(ps：下面操作中HEAD后面的波浪线表示该仓库的上一个版本（这里的版本也称作快照），两个波浪线表示现在HEAD指向的版本的前两个版本，如果是前n个版本可以写作HEAD~n)</p></blockquote><ul><li><p><strong><code>git reset --soft HEAD~</code></strong></p><ul><li>执行该操作后：<ul><li>移动HEAD的指向，将其指向上一个版本</li></ul></li></ul></li><li><p><strong><code>git reset --mixed HEAD~</code></strong></p><ul><li>执行该操作后：<ul><li>移动HEAD的指向，将其指向上一个快照</li><li>将HEAD移动后指向的版本内容回滚到暂存区域</li></ul></li></ul></li><li><p><strong><code>git reset --hard HEAD~</code></strong></p><p>  （<strong>注意危险：该操作会将项目目录区域下的文件覆盖掉，本地的文件可能丢失，谨慎操作！</strong>）</p><ul><li>执行该操作后：<ul><li>移动HEAD的指向，将其指向前一个版本快照</li><li>将HEAD移动后指向的版本快照回滚到暂存区域</li><li>将暂存区域的文件回滚到项目目录区域（<strong>万分注意：这里这步是会覆盖项目文件的</strong>）</li></ul></li></ul></li></ul><h4 id="2）checkout"><a href="#2）checkout" class="headerlink" title="2）checkout"></a>2）checkout</h4><ul><li><p>将版本快照滚到工作目录和暂存区域里去</p><p>  <strong><code>git checkout 版本号</code></strong></p></li></ul><ul><li><p>将暂存区域里的东西回滚到工作目录里来</p><p>  <strong><code>git checkout</code></strong></p><p>  单个文件：<strong>git checkout 文件名</strong></p></li></ul><p> <strong>总结：</strong></p><ol><li><strong><code>--soft</code>、<code>--mixed</code>、<code>--hard</code>分别回滚一级二级三级，程度递增，特别<code>hard</code>会回滚到项目目录覆盖到本地，需要注意</strong></li><li><strong>默认是<code>--mixed</code></strong></li><li><strong><code>reset</code>还可以回滚到特定的版本快照，只需要快照的id即可，即版本的hash值，hash值可以用<code>git log查看</code>，<code>git reset 版本id</code>，例如：<code>git reset bc57ccd</code>（不用全部，前几位能够定位即可）</strong></li><li><strong><code>reset</code>还可以回滚单个文件，<code>git reset</code> 版本快照 文件名或者路径，例如：<code>git reset bc57ccd HEADME.md</code></strong><ol start="5"><li><strong><code>reset</code>还可以往前滚，如果你往后滚了，<code>HEAD</code>指针指向了旧的版本快照，那么你只要找到你要回滚的之前的新提交的版本快照id就可以，而查看快照id可以用<code>git reflog</code>查看。</strong></li></ol></li></ol><h3 id="（五）对比文件"><a href="#（五）对比文件" class="headerlink" title="（五）对比文件"></a>（五）对比文件</h3><h4 id="1-比较暂存区域与工作目录"><a href="#1-比较暂存区域与工作目录" class="headerlink" title="(1)比较暂存区域与工作目录"></a>(1)比较暂存区域与工作目录</h4><p><code>git diff</code></p><p>对比文件较多时，可以操作移动，简单操作如下：</p><ul><li>按键盘上的<code>j</code>表示向下移动一行</li><li><code>k</code> 向上移动一行</li><li><code>f</code> 向下翻一页</li><li><code>b</code> 向上翻一页</li><li><code>d</code> 向下移动半页</li><li><code>u</code> 向上移动半页</li><li><code>g</code> 跳转到第一行</li><li><code>G</code> 跳转到最后一行</li><li><code>行数 g</code> 例如<code>3 g</code> 跳到第三行</li><li><code>/搜索词</code> 从上往下搜索该词语</li><li><code>?搜索词</code> 从下往上搜索该词语</li><li><code>h</code>帮助窗口</li></ul><h4 id="2-比较仓库里的两个版本"><a href="#2-比较仓库里的两个版本" class="headerlink" title="(2)比较仓库里的两个版本"></a>(2)比较仓库里的两个版本</h4><p><code>git diff 版本号1 版本号2</code></p><h4 id="3-比较当前工作目录和仓库里的版本快照"><a href="#3-比较当前工作目录和仓库里的版本快照" class="headerlink" title="(3)比较当前工作目录和仓库里的版本快照"></a>(3)比较当前工作目录和仓库里的版本快照</h4><p><code>git diff 版本号</code></p><p>另外：当前工作目录和最新的仓库版本，即HEAD所指的版本比较</p><p><code>git diff HEAD</code></p><h4 id="4-比较暂存区域与仓库"><a href="#4-比较暂存区域与仓库" class="headerlink" title="(4)比较暂存区域与仓库"></a>(4)比较暂存区域与仓库</h4><p>1.仓库最新的版本快照与暂存区文件比较</p><p><code>git diff --cached</code></p><p>2.指定仓库的一个版本快照与暂存区文件比较</p><p><code>git diff --cached 版本号</code></p><h3 id="（六）修改"><a href="#（六）修改" class="headerlink" title="（六）修改"></a>（六）修改</h3><h4 id="1-修改提交说明"><a href="#1-修改提交说明" class="headerlink" title="(1)修改提交说明"></a>(1)修改提交说明</h4><p>如果你想改变之前的提交说明，那么就</p><p><code>git commit --amend</code></p><p>或者直接</p><p><code>git commit --amend -m &quot;你改变后的提交说明&quot;</code></p><h4 id="2-删除文件"><a href="#2-删除文件" class="headerlink" title="(2)删除文件"></a>(2)删除文件</h4><ul><li><p><code>git rm 文件名</code>：删除暂存区与工作目录里的该文件，仓库里的不会删除，如果想删除仓库里的请回滚</p></li><li><p><code>git rm -f 文件名</code>：如果暂存区与工作目录里的文件出现同名不同内容的情况，用上面那种就会提示你有情况了，你可以用该命令强制一起删除</p></li><li><p><code>git rm --cached 文件名</code>：只删除暂存区的文件而不删除工作目录下的文件</p></li></ul><h4 id="3-文件重命名"><a href="#3-文件重命名" class="headerlink" title="(3)文件重命名"></a>(3)文件重命名</h4><p><code>git mv 原文件名 新文件名</code></p><h2 id="四、分支"><a href="#四、分支" class="headerlink" title="四、分支"></a>四、分支</h2><blockquote><p>关于什么是git分支，他有什么优点，为什么要创建分支，自行百度</p></blockquote><h3 id="（一）创建分支"><a href="#（一）创建分支" class="headerlink" title="（一）创建分支"></a>（一）创建分支</h3><p><code>git branch 分支名称</code></p><h3 id="（二）切换分支"><a href="#（二）切换分支" class="headerlink" title="（二）切换分支"></a>（二）切换分支</h3><blockquote><p>把HEAD指向的分支切换到你需要的分支上来</p></blockquote><p><code>git checkout 分支名</code></p><p>【偷懒】创建新分支并且切换到新分支里去，连续做两步</p><p><code>git checkout -b 分支名</code></p><h3 id="（三）合并分支"><a href="#（三）合并分支" class="headerlink" title="（三）合并分支"></a>（三）合并分支</h3><p>把别处的分支合并到你现在HEAD所指向的分支上来</p><p><code>git merge 分支名</code></p><h3 id="（四）删除分支"><a href="#（四）删除分支" class="headerlink" title="（四）删除分支"></a>（四）删除分支</h3><p><code>git branch -d 分支名</code></p><p>或者写两个小横线的全名</p><p><code>git branch --delete 分支名</code></p><h3 id="（五）匿名分支"><a href="#（五）匿名分支" class="headerlink" title="（五）匿名分支"></a>（五）匿名分支</h3><p><code>git checkout HEAD~</code></p><p>HEAD处于游离状态，你可以对这个创建的匿名分支作实验性操作，当HEAD回到正常分支时匿名分支会销毁</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>git</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>git</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【 CSS 】元素水平垂直居中</title>
+    <link href="/2020/04/05/%E3%80%90-CSS-%E3%80%91%E5%85%83%E7%B4%A0%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/"/>
+    <url>/2020/04/05/%E3%80%90-CSS-%E3%80%91%E5%85%83%E7%B4%A0%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/</url>
+    
+    <content type="html"><![CDATA[<h1 id="【-CSS-】元素水平垂直居中"><a href="#【-CSS-】元素水平垂直居中" class="headerlink" title="【 CSS 】元素水平垂直居中"></a>【 CSS 】元素水平垂直居中</h1><h2 id="一、水平居中"><a href="#一、水平居中" class="headerlink" title="一、水平居中"></a>一、水平居中</h2><h3 id="1、对于行内元素"><a href="#1、对于行内元素" class="headerlink" title="1、对于行内元素"></a>1、对于行内元素</h3><pre><code class="css">.content {    width: 100%;    text-align: center;}</code></pre><pre><code class="html">&lt;div class=&quot;content&quot;&gt;hello&lt;/div&gt;</code></pre><h3 id="2、对于确定宽度的块级元素"><a href="#2、对于确定宽度的块级元素" class="headerlink" title="2、对于确定宽度的块级元素"></a>2、对于确定宽度的块级元素</h3><blockquote><p>width, margin 实现</p></blockquote><pre><code class="css">.parent {    width: 400px;    background-color: silver;}.children {    width: 200px;  margin: 0 auto;    text-align: center;    border: 1px sienna solid;}</code></pre><pre><code class="html">&lt;div class=&quot;parent&quot;&gt;    &lt;div class=&quot;children&quot;&gt;      Hello World    &lt;/div&gt;&lt;/div&gt;</code></pre><p><img src="/img/image-20200405214218652.png" srcset="/img/loading.gif" alt="image-20200405214218652"></p><h3 id="3、对于宽度未知的块级元素"><a href="#3、对于宽度未知的块级元素" class="headerlink" title="3、对于宽度未知的块级元素"></a>3、对于宽度未知的块级元素</h3><h4 id="方法1：设置table"><a href="#方法1：设置table" class="headerlink" title="方法1：设置table"></a><strong>方法1：设置table</strong></h4><pre><code class="css">.parent {    width: 400px;    background-color: silver;}.children {    display:table;    margin:0 auto;    border:1px solid red;}</code></pre><pre><code class="html">&lt;div class=&quot;parent&quot;&gt;    &lt;div class=&quot;children&quot;&gt;      Hello World    &lt;/div&gt;&lt;/div&gt;</code></pre><p><img src="/img/image-20200405213237414.png" srcset="/img/loading.gif" alt="image-20200405213237414"></p><h4 id="方法2：设置inline-block"><a href="#方法2：设置inline-block" class="headerlink" title="方法2：设置inline-block"></a><strong>方法2：设置inline-block</strong></h4><pre><code class="css">.parent {    width: 400px;    background-color: silver;    text-align: center;}.children {    height: 200px;    display:inline-block;    border: 1px sienna solid;}</code></pre><pre><code class="html">&lt;div class=&quot;parent&quot;&gt;    &lt;div class=&quot;children&quot;&gt;        Hello World    &lt;/div&gt;&lt;/div&gt;</code></pre><p><img src="/img/image-20200405214840461.png" srcset="/img/loading.gif" alt="image-20200405214840461"></p><h4 id="方法3：弹性盒子-display-flex"><a href="#方法3：弹性盒子-display-flex" class="headerlink" title="方法3：弹性盒子 display:flex"></a>方法3：弹性盒子 display:flex</h4><pre><code class="css">.parent {    width: 400px;    height: 400px;    background-color: silver;    display: flex;    justify-content: center;}.children {    height: 200px;    background-color: sienna;}</code></pre><pre><code class="html">&lt;div class=&quot;parent&quot;&gt;    &lt;div class=&quot;children&quot;&gt;        Hello World    &lt;/div&gt;&lt;/div&gt;</code></pre><p><img src="/img/image-20200405221417435.png" srcset="/img/loading.gif" alt="image-20200405221417435"></p><h4 id="方法4：父盒子设置相对，子盒子绝对，left、transform-移位实现"><a href="#方法4：父盒子设置相对，子盒子绝对，left、transform-移位实现" class="headerlink" title="方法4：父盒子设置相对，子盒子绝对，left、transform 移位实现"></a>方法4：父盒子设置相对，子盒子绝对，left、transform 移位实现</h4><pre><code class="css">.parent {    position: relative;    width: 400px;    height: 400px;    background-color: silver;}.children {    position: absolute;    height: 200px;    left: 50%;    transform: translateX(-50%);    background-color: sienna;}</code></pre><pre><code class="html">&lt;div class=&quot;parent&quot;&gt;    &lt;div class=&quot;children&quot;&gt;        Hello World    &lt;/div&gt;&lt;/div&gt;</code></pre><p><img src="/img/image-20200405221417435.png" srcset="/img/loading.gif" alt="image-20200405221417435"></p><h2 id="二、垂直居中"><a href="#二、垂直居中" class="headerlink" title="二、垂直居中"></a>二、垂直居中</h2><h3 id="1、父盒子设置相对，子盒子绝对，top、transform-移位实现"><a href="#1、父盒子设置相对，子盒子绝对，top、transform-移位实现" class="headerlink" title="1、父盒子设置相对，子盒子绝对，top、transform 移位实现"></a>1、父盒子设置相对，子盒子绝对，top、transform 移位实现</h3><pre><code class="css">.parent {    position: relative;    width: 400px;    height: 400px;    background-color: silver;}.children {    position: absolute;    height: 200px;    top: 50%;    transform: translateY(-50%);    background-color: sienna;}</code></pre><pre><code class="html">&lt;div class=&quot;parent&quot;&gt;    &lt;div class=&quot;children&quot;&gt;        Hello World    &lt;/div&gt;&lt;/div&gt;</code></pre><p><img src="/img/image-20200405221804086.png" srcset="/img/loading.gif" alt="image-20200405220811446"></p><h3 id="2、弹性盒子-display-flex-实现"><a href="#2、弹性盒子-display-flex-实现" class="headerlink" title="2、弹性盒子 display:flex 实现"></a>2、弹性盒子 display:flex 实现</h3><pre><code class="css">.parent {    width: 400px;    height: 400px;    background-color: silver;    display: flex;    align-items: center;}.children {    height: 200px;    background-color: sienna;}</code></pre><pre><code class="html">&lt;div class=&quot;parent&quot;&gt;    &lt;div class=&quot;children&quot;&gt;        Hello World    &lt;/div&gt;&lt;/div&gt;</code></pre><p><img src="/img/image-20200405221804086.png" srcset="/img/loading.gif" alt="image-20200405221804086"></p><h2 id="三、水平且垂直居中"><a href="#三、水平且垂直居中" class="headerlink" title="三、水平且垂直居中"></a>三、水平且垂直居中</h2><blockquote><p>结合上述两种方法即刻</p></blockquote><h3 id="例如：弹性盒子"><a href="#例如：弹性盒子" class="headerlink" title="例如：弹性盒子"></a>例如：弹性盒子</h3><pre><code class="css">.parent {    width: 400px;    height: 400px;    background-color: silver;    display: flex;    align-items: center;    justify-content: center;}.children {    width: 200px;    height: 200px;    background-color: sienna;}</code></pre><pre><code class="html">&lt;div class=&quot;parent&quot;&gt;    &lt;div class=&quot;children&quot;&gt;        Hello World    &lt;/div&gt;&lt;/div&gt;</code></pre><p><img src="/img/image-20200405222613740.png" srcset="/img/loading.gif" alt="image-20200405222613740"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CSS</tag>
+      
+      <tag>水平垂直居中</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
